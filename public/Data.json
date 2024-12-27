@@ -1,0 +1,269 @@
+[
+    {
+        "emp_id": "55093251",
+        "name": "Vishnu Menon",
+        "score_count": 72,
+        "image": "images/Vishnu1.Menon.png",
+        "pre_score": 41,
+        "prev_team": "NA",
+        "courses": [
+            "1. Programming with Google Go",
+            "2. AWS Cloud Technical Essentials",
+            "3. Introduction to Generative AI"
+        ]
+    },
+    {
+        "emp_id": "55093186",
+        "name": "Anushree Shukla",
+        "score_count": 58,
+        "image": "images/Anushree1.Shuklaa.png",
+        "pre_score": 44,
+        "prev_team": "NA",
+        "courses": [
+            "1. Database Structures and Management with MySQL",
+            "2. Microsoft Power BI Data Analyst Professional Certificate",
+            "3. Google Data Analytics"
+        ]
+    },
+    {
+        "emp_id": "55093230",
+        "name": "Anagha Shinde",
+        "score_count": 57,
+        "image": "images/Anagha.Shinde.png",
+        "pre_score": 43,
+        "prev_team": "NA",
+        "courses": [
+            "1. Becoming a Product Manager: A Complete Guide",
+            "2. Using AI in UX Design Process",
+            "3. Design Thinking for UX design Managers"
+        ]
+    },
+    {
+        "emp_id": "55087655",
+        "name": "Dhiraj Kunder",
+        "score_count": 39,
+        "image": "images/Dhiraj.Kunder.jpg",
+        "pre_score": 39,
+        "prev_team": "NA",
+        "courses": [
+            "1. Introduction to Generative AI",
+            "2. Learning Chrome Web Developer Tools",
+            "3. Excel: Advanced Formulas and Functions"
+        ]
+    },
+    {
+        "emp_id": "55099194",
+        "name": "Bhavya Momaya",
+        "score_count": 34,
+        "image": "images/Bhavya.Momaya.jpg",
+        "pre_score": 79,
+        "prev_team": "NA",
+        "courses": [
+            "1. Meta React basics",
+            "2. Programming Fundamentals by Duke's University",
+            "3. AI in Everyday Life"
+        ]
+    },
+    {
+        "emp_id": "55087478",
+        "name": "Avinash Gupta",
+        "score_count": 36,
+        "image": "images/Avinash.Gupta.jpg",
+        "pre_score": 50,
+        "prev_team": "NA",
+        "courses": [
+            "1. Introduction to Generative AI",
+            "2. Learning Chrome Web Developer Tools",
+            "3. Excel: Advanced Formulas and Functions"
+        ]
+    },
+    
+    {
+        "emp_id": "55099147",
+        "name": "Umakant Patil",
+        "score_count": 20,
+        "image": "/images/Umakant.jpg",
+        "pre_score": 0,
+        "prev_team": "JioMeet",
+        "courses": [
+            "1. Node.js & MongoDB: Developing Back-end Database Applications",
+            "2. Learning Chrome Web Developer Tools"
+        ]
+    },
+    { 
+        "emp_id": "55099238",
+        "name": "Mridul Upadhya",
+        "score_count": 19,
+        "image": "images/Mridul.Upadhya.jpg",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": [
+            "1. Introduction to Gen AI",
+            "2. Introduction to Product management",
+            "3. Microsoft Power BI",
+            "4. Introduction to Data Ananlytics"
+        ]
+    },
+    {
+        "emp_id": "55099022",
+        "name": "Pratik Joshi",
+        "score_count": 8,
+        "image": "images/Pratik5.Joshi.jpg",
+        "pre_score": 0,
+        "prev_team": "JioMeet",
+        "courses": [
+            "1. DevOps Foundations (2016)",
+            "2. Building a Personalized Chatbot with OpenAI and LangChain"
+        ]
+    },
+    {
+        "emp_id": "55099068",
+        "name": "Omkar Ghodake",
+        "score_count": 8,
+        "image": "images/Omkar.Ghodake.jpg",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": [
+            "1. Blockchain, Smart Contracts",
+            "2. Solidity, Web3",
+            "3. HTML Canvas"
+        ]
+    },
+    {
+        "emp_id": "55099006",
+        "name": "Shubham Joshi",
+        "score_count": 5,
+        "image": "images/Shubham2.Joshi.jpg",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": [
+            "1. Javascript",
+            "2. React JS",
+            "3. Node.js basics"
+        ]
+    },
+    {
+        "emp_id": "55093428",
+        "name": "Devraj Singh",
+        "score_count": 3,
+        "image": "images/Devraj3.Singh.png",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": [
+            "1. Spring REST API for Beginners",
+            "2. Master Spring Boot 3 & Spring Framework 6 with Java (Ongoing)"
+        ]
+    },
+    {
+        "emp_id": "55099140",
+        "name": "Jaypal Koli",
+        "score_count": 3,
+        "image": "images/Jaypal.Koli.jpg",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": [
+            "1. Learning Chrome Web Developer Tools",
+            "2. Programming Foundations: Fundamentals",
+            "3. Generative AI for Everyone"
+        ]
+    },
+    {
+        "emp_id": "55093222",
+        "name": "Sanjeev Prajapati",
+        "score_count": 3,
+        "image": "images/Sanjeev2.Prajapati.png",
+        "pre_score": 0,
+        "prev_team": "JPMA",
+        "courses": [
+            "1. Fundamentals of Python",
+            "2. Python Intermediate from Kaggle",
+            "3. Machine Learning from Kaggle"
+        ]
+    },
+    {
+        "emp_id": "55087415",
+        "name": "Sakshi Rai",
+        "score_count": 2,
+        "image": "images/Sakshi1.Rai.jpg",
+        "pre_score": 0,
+        "prev_team": "MyJio/Jio.com",
+        "courses": [
+            "1. Introduction to Big Data with Spark & Hadoop",
+            "2. Blockchain: Learning Solidity",
+            "3. Advance Your Skills in AI and Machine Learning"
+        ]
+    },
+    {
+        "emp_id": "55093439",
+        "name": "Manoj Inbarajan",
+        "score_count": 0,
+        "image": "images/Manoj.Inbarajan_.jpg",
+        "pre_score": 0,
+        "prev_team": "Campaign Team",
+        "courses": [
+            "1. Product Management: An Introduction",
+            "2. Google UX Design",
+            "3. Business Analysis Fundamentals"
+        ]
+    },
+    {
+        "emp_id": "55099135",
+        "name": "Nikita Sonawane",
+        "score_count": 0,
+        "image": "images/Nikita.Sonawane.jpg",
+        "pre_score": 0,
+        "prev_team": "NA",
+        "courses": [
+            "1. Intro to Java",
+            "2. Programming Foundations: Databases"
+        ]
+    },
+    {
+        "emp_id": "55093276",
+        "name": "Nikita Suhane",
+        "score_count": 0,
+        "image": "images/Nikita.Suhane.png",
+        "pre_score": 0,
+        "prev_team": "JPMA",
+        "courses": [
+            "1. Google Cybersecurity Certification for Beginners",
+            "2. Introduction to Databases for Back-End Development",
+            "3. Programming Foundations: Databases"
+        ]
+    },
+    {
+        "emp_id": "55093373",
+        "name": "Prathwikumar S",
+        "score_count": 0,
+        "image": "images/prathwikumar.s.JPG",
+        "pre_score": 0,
+        "prev_team": "JioMeet",
+        "courses": [
+            "1. MERN Stack Development",
+            "2. React Basic",
+            "3. Node.js Basic"
+        ]
+    },
+    {
+        "emp_id": "55114802",
+        "name": "Rishabh Kanaujiya",
+        "score_count": 0,
+        "image": "images/Rishabh.Kanaujiya.png",
+        "pre_score": 0,
+        "prev_team": "Campaign Team",
+        "courses": [
+            "1. Introduction to Generative AI",
+            "2. Introduction to Large Language Models",
+            "3. MERN Stack Development"
+        ]
+    },
+    {
+        "emp_id": "55093464",
+        "name": "Shriyash Thorat",
+        "score_count": 0,
+        "image": "images/Shriyash.Thorat.jpg",
+        "pre_score": 0,
+        "prev_team": "JCPC",
+        "courses": []
+    }
+]

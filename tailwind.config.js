@@ -8,6 +8,7 @@ export default {
         topSecret: ['TopSecret'],
         raleway: ['Raleway'],
         bebas: ['Bebas'],
+        'detective': ['"Special Elite"', 'Courier', 'monospace'],
       },
     },
   },

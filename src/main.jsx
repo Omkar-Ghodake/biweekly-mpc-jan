@@ -8,6 +8,7 @@ import Landing from './pages/Landing.jsx'
 import WhatWeDo from './pages/WhatWeDo.jsx'
 import Bureau from './pages/Bureau.jsx'
 import Black from './pages/Black.jsx'
+import ScoreCard from './components/scoreCards/ScoreCard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/landing' element={<Landing />} />
             <Route path='/investigations' element={<WhatWeDo />} />
             <Route path='/bureau' element={<Bureau />} />
+            <Route path='/scorecard' element={<ScoreCard/>}/>
           </Routes>
         </div>
       </div>
