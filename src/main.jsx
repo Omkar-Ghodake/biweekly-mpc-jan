@@ -22,7 +22,6 @@ createRoot(document.getElementById('root')).render(
             <Route path='/landing' element={<Landing />} />
             <Route path='/investigations' element={<WhatWeDo />} />
             <Route path='/bureau' element={<Bureau />} />
-            <Route path='/scorecard' element={<ScoreCard/>}/>
           </Routes>
         </div>
       </div>
