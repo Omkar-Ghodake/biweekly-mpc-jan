@@ -1,15 +1,14 @@
-import React from 'react'
-import landingImage from '../assets/landing_detective.jpg'
-import { Link } from 'react-router-dom'
-import Button from '../components/Button'
-import { GiPistolGun } from 'react-icons/gi'
 import { motion } from 'framer-motion'
+import React from 'react'
 import { AiOutlineAim } from 'react-icons/ai'
+import { Link } from 'react-router-dom'
+import landingImage from '../assets/landing_detective.jpg'
+import Button from '../components/Button'
 
 const Landing = () => {
   return (
     <div className='h-[90vh] w-full bg-transparent flex justify-between mt-[10vh] overflow-hidden'>
-      <div className='w-fit p-20 pr-0 flex flex-col space-y-10'>
+      <div className='w-fit px-20 pr-0 flex flex-col justify-center space-y-10'>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -37,7 +36,7 @@ const Landing = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <Link to={'/our-mission'}>
+          <Link to={'/investigations'}>
             <Button>
               Uncover Our Mission <AiOutlineAim className='ml-2 text-2xl' />
             </Button>
@@ -46,8 +45,6 @@ const Landing = () => {
       </div>
 
       <motion.div
-        // initial={{ opacity: 0, x: '100%' }}
-        // animate={{ opacity: 1, x: 0 }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 5 }}
