@@ -13,7 +13,7 @@ const WhatWeDo = () => {
         <span className='lightShadow'>&nbsp;</span>
         <div className="detailboard">
           <span className='d-flex'>
-            <h1 className='text-center title font-topSecret'>BUG INVESTIGATION</h1>
+            <h1 className='text-center title font-topSecret'>OUR MISSIONS</h1>
             <img src={mpcBadge} alt='mpcBadge' className='mpcbadge'/>
           </span>
         </div>

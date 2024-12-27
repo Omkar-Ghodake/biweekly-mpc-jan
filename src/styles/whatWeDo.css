@@ -53,11 +53,10 @@
 
 .detailboard .title{
     margin-top: 1vw;
-    font-size: 3vw;
+    font-size: 3.3vw;
     width: 50%;
     height: fit-content;
     color: rgba(255, 255, 255, 0.785);
-    /* border: 1px solid rgba(255, 255, 255, 0.466); */
     
 }
 
