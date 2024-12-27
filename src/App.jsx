@@ -1,25 +1,32 @@
-import { Link } from "react-router-dom";
-import "./App.css";
-import Button from "./components/Button";
-import { FaGun } from "react-icons/fa6";
-import introVideo from "./assets/introVideo.mp4";
+import { motion } from 'framer-motion'
+import { FaGun } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
+import './App.css'
+import introVideo from './assets/introVideo.mp4'
 
 function App() {
   return (
-    <div className="absolute inset-0 h-screen w-screen">
-      <video src={introVideo} autoPlay muted>
+    <div className='absolute inset-0 h-screen w-screen'>
+      <video src={introVideo} autoPlay muted className='h-full w-full'>
         Video not found
       </video>
 
-      <Link to={"/landing"}>
-        <span className="absolute right-10 bottom-10 flex items-center space-x-5  text-6xl hover:text-stone-300 duration-150">
-          <span className="font-topSecret">ENTER BUREAU</span>
-          <FaGun className="" />
-          {/* <Button className=''>ENTER BUREAU</Button> */}
-        </span>
-      </Link>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5 }}
+        className='absolute right-10 bottom-10 flex items-center space-x-5 text-6xl duration-150 group'
+      >
+        <Link
+          to={'/landing'}
+          className='flex items-center space-x-5 text-stone-800/70 hover:text-stone-800 duration-150'
+        >
+          <span className='font-topSecret'>ENTER BUREAU</span>
+          <FaGun className='text-white/70 group-hover:text-white' />
+        </Link>
+      </motion.div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
