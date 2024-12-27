@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Navbar = () => {
-  return <div>Navbar</div>
+  return <div className='absolute inset-0 h-[10vh]'>Navbar</div>
 }
 
 export default Navbar
