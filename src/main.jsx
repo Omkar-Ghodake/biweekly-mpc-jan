@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router'
 import Navbar from './layouts/navbar/Navbar.jsx'
 import Landing from './pages/Landing.jsx'
+import WhatWeDo from './pages/WhatWeDo.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,8 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             <Route path='/' element={<App />} />
             <Route path='/landing' element={<Landing />} />
+            <Route path='/our-mission' element={<WhatWeDo />} />
+
           </Routes>
         </div>
       </div>
