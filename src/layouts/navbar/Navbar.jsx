@@ -8,7 +8,7 @@ const Navbar = () => {
   const { pathname } = useLocation()
 
   return (
-    <div className='absolute inset-0 h-[10vh] z-50'>
+    <div className='absolute inset-0 h-[10vh] z-20'>
       {showNavbarOnPaths.includes(pathname) && <NavList />}
     </div>
   )
