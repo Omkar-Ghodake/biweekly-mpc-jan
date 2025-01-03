@@ -7,9 +7,9 @@
         "pre_score": 41,
         "prev_team": "NA",
         "courses": [
-            "1. Programming with Google Go",
-            "2. AWS Cloud Technical Essentials",
-            "3. Introduction to Generative AI"
+            "Programming with Google Go",
+            "AWS Cloud Technical Essentials",
+            "Introduction to Generative AI"
         ]
     },
     {
@@ -20,9 +20,9 @@
         "pre_score": 44,
         "prev_team": "NA",
         "courses": [
-            "1. Database Structures and Management with MySQL",
-            "2. Microsoft Power BI Data Analyst Professional Certificate",
-            "3. Google Data Analytics"
+            "Database Structures and Management with MySQL",
+            "Microsoft Power BI Data Analyst Professional Certificate",
+            "Google Data Analytics"
         ]
     },
     {
@@ -33,9 +33,9 @@
         "pre_score": 43,
         "prev_team": "NA",
         "courses": [
-            "1. Becoming a Product Manager: A Complete Guide",
-            "2. Using AI in UX Design Process",
-            "3. Design Thinking for UX design Managers"
+            "Becoming a Product Manager: A Complete Guide",
+            "Using AI in UX Design Process",
+            "Design Thinking for UX design Managers"
         ]
     },
     {
@@ -46,9 +46,9 @@
         "pre_score": 39,
         "prev_team": "NA",
         "courses": [
-            "1. Introduction to Generative AI",
-            "2. Learning Chrome Web Developer Tools",
-            "3. Excel: Advanced Formulas and Functions"
+            "Introduction to Generative AI",
+            "Learning Chrome Web Developer Tools",
+            "Excel: Advanced Formulas and Functions"
         ]
     },
     {
@@ -59,9 +59,9 @@
         "pre_score": 79,
         "prev_team": "NA",
         "courses": [
-            "1. Meta React basics",
-            "2. Programming Fundamentals by Duke's University",
-            "3. AI in Everyday Life"
+            "Meta React basics",
+            "Programming Fundamentals by Duke's University",
+            "AI in Everyday Life"
         ]
     },
     {
@@ -72,25 +72,24 @@
         "pre_score": 50,
         "prev_team": "NA",
         "courses": [
-            "1. Introduction to Generative AI",
-            "2. Learning Chrome Web Developer Tools",
-            "3. Excel: Advanced Formulas and Functions"
+            "Introduction to Generative AI",
+            "Learning Chrome Web Developer Tools",
+            "Excel: Advanced Formulas and Functions"
         ]
     },
-    
     {
         "emp_id": "55099147",
         "name": "Umakant Patil",
-        "score_count": 20,
-        "image": "/images/Umakant.jpg",
-        "pre_score": 0,
+        "score_count": 8,
+        "image": "/images/Umakant_Patil.jfif",
+        "pre_score": 28,
         "prev_team": "JioMeet",
         "courses": [
-            "1. Node.js & MongoDB: Developing Back-end Database Applications",
-            "2. Learning Chrome Web Developer Tools"
+            "Node.js & MongoDB: Developing Back-end Database Applications",
+            "Learning Chrome Web Developer Tools"
         ]
     },
-    { 
+    {
         "emp_id": "55099238",
         "name": "Mridul Upadhya",
         "score_count": 19,
@@ -98,10 +97,10 @@
         "pre_score": 0,
         "prev_team": "JCPC",
         "courses": [
-            "1. Introduction to Gen AI",
-            "2. Introduction to Product management",
-            "3. Microsoft Power BI",
-            "4. Introduction to Data Ananlytics"
+            "Introduction to Gen AI",
+            "Introduction to Product management",
+            "Microsoft Power BI",
+            "Introduction to Data Ananlytics"
         ]
     },
     {
@@ -112,8 +111,8 @@
         "pre_score": 0,
         "prev_team": "JioMeet",
         "courses": [
-            "1. DevOps Foundations (2016)",
-            "2. Building a Personalized Chatbot with OpenAI and LangChain"
+            "DevOps Foundations (2016)",
+            "Building a Personalized Chatbot with OpenAI and LangChain"
         ]
     },
     {
@@ -124,9 +123,9 @@
         "pre_score": 0,
         "prev_team": "JCPC",
         "courses": [
-            "1. Blockchain, Smart Contracts",
-            "2. Solidity, Web3",
-            "3. HTML Canvas"
+            "Blockchain, Smart Contracts",
+            "Solidity, Web3",
+            "HTML Canvas"
         ]
     },
     {
@@ -137,9 +136,9 @@
         "pre_score": 0,
         "prev_team": "JCPC",
         "courses": [
-            "1. Javascript",
-            "2. React JS",
-            "3. Node.js basics"
+            "Javascript",
+            "React JS",
+            "Node.js basics"
         ]
     },
     {
@@ -150,8 +149,8 @@
         "pre_score": 0,
         "prev_team": "JCPC",
         "courses": [
-            "1. Spring REST API for Beginners",
-            "2. Master Spring Boot 3 & Spring Framework 6 with Java (Ongoing)"
+            "Spring REST API for Beginners",
+            "Master Spring Boot 3 & Spring Framework 6 with Java (Ongoing)"
         ]
     },
     {
@@ -162,9 +161,9 @@
         "pre_score": 0,
         "prev_team": "JCPC",
         "courses": [
-            "1. Learning Chrome Web Developer Tools",
-            "2. Programming Foundations: Fundamentals",
-            "3. Generative AI for Everyone"
+            "Learning Chrome Web Developer Tools",
+            "Programming Foundations: Fundamentals",
+            "Generative AI for Everyone"
         ]
     },
     {
@@ -175,9 +174,9 @@
         "pre_score": 0,
         "prev_team": "JPMA",
         "courses": [
-            "1. Fundamentals of Python",
-            "2. Python Intermediate from Kaggle",
-            "3. Machine Learning from Kaggle"
+            "Fundamentals of Python",
+            "Python Intermediate from Kaggle",
+            "Machine Learning from Kaggle"
         ]
     },
     {
@@ -188,9 +187,9 @@
         "pre_score": 0,
         "prev_team": "MyJio/Jio.com",
         "courses": [
-            "1. Introduction to Big Data with Spark & Hadoop",
-            "2. Blockchain: Learning Solidity",
-            "3. Advance Your Skills in AI and Machine Learning"
+            "Introduction to Big Data with Spark & Hadoop",
+            "Blockchain: Learning Solidity",
+            "Advance Your Skills in AI and Machine Learning"
         ]
     },
     {
@@ -201,9 +200,9 @@
         "pre_score": 0,
         "prev_team": "Campaign Team",
         "courses": [
-            "1. Product Management: An Introduction",
-            "2. Google UX Design",
-            "3. Business Analysis Fundamentals"
+            "Product Management: An Introduction",
+            "Google UX Design",
+            "Business Analysis Fundamentals"
         ]
     },
     {
@@ -214,8 +213,8 @@
         "pre_score": 0,
         "prev_team": "NA",
         "courses": [
-            "1. Intro to Java",
-            "2. Programming Foundations: Databases"
+            "Intro to Java",
+            "Programming Foundations: Databases"
         ]
     },
     {
@@ -226,9 +225,9 @@
         "pre_score": 0,
         "prev_team": "JPMA",
         "courses": [
-            "1. Google Cybersecurity Certification for Beginners",
-            "2. Introduction to Databases for Back-End Development",
-            "3. Programming Foundations: Databases"
+            "Google Cybersecurity Certification for Beginners",
+            "Introduction to Databases for Back-End Development",
+            "Programming Foundations: Databases"
         ]
     },
     {
@@ -239,9 +238,9 @@
         "pre_score": 0,
         "prev_team": "JioMeet",
         "courses": [
-            "1. MERN Stack Development",
-            "2. React Basic",
-            "3. Node.js Basic"
+            "MERN Stack Development",
+            "React Basic",
+            "Node.js Basic"
         ]
     },
     {
@@ -252,9 +251,9 @@
         "pre_score": 0,
         "prev_team": "Campaign Team",
         "courses": [
-            "1. Introduction to Generative AI",
-            "2. Introduction to Large Language Models",
-            "3. MERN Stack Development"
+            "Introduction to Generative AI",
+            "Introduction to Large Language Models",
+            "MERN Stack Development"
         ]
     },
     {
