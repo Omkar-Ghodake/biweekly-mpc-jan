@@ -17,6 +17,10 @@
 }
 
 
+.stickyCardData .card .modal-content{
+    z-index: 60
+}
+
 
 .stickyCardData .card{
     opacity: 60%;
@@ -66,6 +70,89 @@
 }
 
 
-#stickyCardModal{
-    z-index: 35;
+
+.cardModal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100vh;
+    width: 100vw;
+    backdrop-filter: blur(8px);
+}
+
+.cardModal .dialoge{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80vh;
+    width: 40vw;
+    border-radius: 2%;
+    padding: 1.5vw;
+
+    animation: modalAnimation ease-in-out 0.5s;
+}
+
+
+
+
+.cardModal .dialoge .image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vw;
+
+
+}
+
+.cardModal .image h1{
+    border-bottom: 2px solid white;
+    margin-top: 1vw;
+    font-size: 2.5vw;
+    color:rgb(220, 215, 215);
+    font-weight: 600;
+}
+
+.cardModal .image p{
+    margin-top: 1.3vw;
+    font-size: 1.3vw;
+    color:white;
+    font-weight: 600;
+}
+
+.cardModal img{
+    width: 12vw;
+}
+
+.cardModal .score{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardModal .score h1{
+    color: white;
+    font-weight: 600;
+    font-size: 1.7vw;
+    
+}
+
+
+
+.cardModal .score span{
+    display: flex;
+    margin: 2vw;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+@keyframes modalAnimation {
+    from{opacity: 0%;}
+    to{opacity: 100%;}
+    
 }

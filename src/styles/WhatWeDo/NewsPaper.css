@@ -6,6 +6,7 @@
     left: 30%;
     rotate: -16deg;
     width: 7vw;
+    cursor:pointer;
 }
 
 
@@ -35,6 +36,7 @@
     left: 45%;
     rotate: 14deg;
     width: 7vw;
+    cursor:pointer;
 }
 
 .image3{
@@ -45,6 +47,7 @@
     right: 30%;
     rotate: -6deg;
     width: 7vw;
+    cursor:pointer;
 }
 
 .image4{
@@ -55,6 +58,7 @@
     right: 25%;
     rotate: 6deg;
     width: 7vw;
+    cursor:pointer;
 }
 
 .image1:hover ,.image2:hover ,.image3:hover , .image4:hover{
