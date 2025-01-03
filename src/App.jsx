@@ -3,8 +3,16 @@ import { FaGun } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import './App.css'
 import introVideo from './assets/introVideo.mp4'
+import { useContext, useEffect } from 'react'
+import { AgentAuthenticationContext } from './context/AgentAuthenticationProvider'
 
 function App() {
+  const { getAgent } = useContext(AgentAuthenticationContext)
+
+  useEffect(() => {
+    getAgent()
+  }, [])
+
   return (
     <div className='absolute inset-0 h-screen w-screen'>
       <video src={introVideo} autoPlay muted className='h-full w-full'>

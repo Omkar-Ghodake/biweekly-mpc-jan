@@ -5,7 +5,7 @@ const Button = ({ children, className }) => {
   return (
     <button
       className={twMerge(
-        'bg-white text-black px-10 py-4 text-xl font-semibold tracking-wider flex items-center hover:scale-x-110 duration-150',
+        'bg-white text-black px-10 py-4 text-xl font-semibold tracking-wider flex justify-center items-center hover:scale-x-105 duration-150',
         className
       )}
     >

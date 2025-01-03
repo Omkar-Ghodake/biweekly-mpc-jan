@@ -1,11 +1,21 @@
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useContext } from 'react'
 import { AiOutlineAim } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import landingImage from '../assets/landing_detective.jpg'
 import Button from '../components/Button'
+import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 
 const Landing = () => {
+  const { agent } = useContext(AgentAuthenticationContext)
+
+  // if (!agent.isAuthenticated) {
+  //   console.log('agent.isAuthenticated:', agent.isAuthenticated)
+  //   return <Navigate to={'/sign_in'} />
+  // }
+
+  console.log('agent:::', agent)
+
   return (
     <div className='h-[90vh] w-full bg-transparent flex justify-between mt-[10vh] overflow-hidden'>
       <div className='w-fit px-20 pr-0 flex flex-col justify-center space-y-10'>
