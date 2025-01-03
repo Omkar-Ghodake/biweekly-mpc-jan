@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import logo from '../assets/mpcBadge.png'
 
 const Bureau = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -60,7 +61,7 @@ const Bureau = () => {
   const translateValue = -currentIndex * 100
 
   return (
-    <div className='relative w-full h-[90vh] flex items-center justify-center bg-black overflow-hidden'>
+    <div className='relative w-full h-[90vh] flex items-center justify-center bg-black overflow-hidden '>
       {/* Left Button */}
       <button
         className='absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 hover:bg-gray-700'
@@ -77,7 +78,7 @@ const Bureau = () => {
           <img
             src={carouselData[getAdjacentIndex(-1)].image}
             alt={carouselData[getAdjacentIndex(-1)].name}
-            className='w-full h-full object-cover'
+            className='w-full h-full object-cover grayscale'
           />
         </div>
       </div>
@@ -89,13 +90,13 @@ const Bureau = () => {
           <img
             src={carouselData[getAdjacentIndex(1)].image}
             alt={carouselData[getAdjacentIndex(1)].name}
-            className='w-full h-full object-cover'
+            className='w-full h-full object-cover grayscale'
           />
         </div>
       </div>
 
       {/* Carousel Container */}
-      <div className='relative w-4/5 md:w-3/4 lg:w-4/5 h-[350px] overflow-hidden'>
+      <div className='absolute w-4/5 md:w-3/4 lg:w-4/5 h-[350px] overflow-hidden'>
         <div
           className={`flex transition-transform duration-500 ease-in-out transform ${rotateClass}`}
           style={{ transform: `translateX(${translateValue}%)` }}
@@ -106,13 +107,13 @@ const Bureau = () => {
               className='flex-shrink-0 w-full h-full flex items-center justify-center transition-all duration-500'
             >
               {/* Investigator Card */}
-              <div className='w-full md:w-3/4 lg:w-[850px] h-[350px] bg-black shadow-xl rounded-lg overflow-hidden flex border border-gray-700 relative'>
+              <div className='flex w-full md:w-3/4 lg:w-[850px] h-[350px] bg-black shadow-xl rounded-lg overflow-hidden  border border-gray-700 '>
                 {/* Image Section */}
-                <div className='flex flex-col items-center justify-center w-[250px] h-full bg-black'>
+                <div className='flex flex-col items-center justify-center w-[250px] h-[375px] bg-black '>
                   <img
                     src={item.image}
                     alt={item.name}
-                    className='w-[200px] h-[200px] object-cover rounded-lg mb-4'
+                    className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale '
                   />
                   <p className='font-bold text-center text-white border-gray-700  border-2 text-sm  p-2 rounded-md w-[200px] tracking-widest'>
                     ID: {item.emp_id}
@@ -120,11 +121,11 @@ const Bureau = () => {
                 </div>
 
                 {/* Text Section */}
-                <div className='relative w-2/3 p-4 flex flex-col justify-start'>
+                <div className='relative w-2/3 p-3 flex flex-col justify-start '>
                   {/*LOGO (Centered in Text Section) */}
                   <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0'>
                     <img
-                      src='/images/WaterMark.png'
+                      src={logo}
                       alt='Background Logo'
                       className='w-[250px] h-[250px] object-contain opacity-10'
                     />
@@ -181,7 +182,7 @@ const Bureau = () => {
       </button>
 
       {/* Thumbnail Navigation */}
-      <div className='absolute bottom-10 flex justify-center w-full space-x-3'>
+      <div className='absolute bottom-10 flex justify-center w-full space-x-3 grayscale contrast-100 brightness-110'>
         {carouselData.map((item, index) => (
           <div
             key={index}
