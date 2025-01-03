@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
 .ourMissionContainer .tubeLight{
@@ -66,3 +67,9 @@
     top: 4%;
     opacity: 0.19;
 }
+
+
+
+
+
+

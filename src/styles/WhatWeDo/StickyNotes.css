@@ -1,0 +1,71 @@
+.stickyCardData {
+    display: flex;
+    flex-wrap: wrap;
+    
+    z-index: 30;
+    position: absolute;
+    padding: 5vw;
+    position: absolute;
+    left: 10%;
+    top: 25%;
+    width: 100vw;
+}
+
+
+.modal-backdrop{
+    z-index: 10;
+}
+
+
+
+.stickyCardData .card{
+    opacity: 60%;
+    align-items: center;
+    padding: 0.5vw;
+    width: 7vw;
+    height: 8vw;
+    margin:2vw;
+    margin-right: 20vw;
+}
+
+
+
+
+.stickyCardData :hover{
+    opacity: 100%;
+    transition-duration: 150ms;
+    cursor: pointer;
+    
+    
+}
+
+
+.stickyCardData .card-body{
+    /* background-color: black; */
+    color: black;
+    padding: 0;
+}
+
+.stickyCardData .card .card-title{
+    text-align: center;
+    font-size: 1em;
+    width: auto;
+    
+    font-weight: 600;
+}
+.stickyCardData .card .card-text{
+    font-size: 1vw;
+}
+
+
+.stickyCardData .card-img-top{
+    padding: 1vw;
+    background-color: black;
+    margin-bottom: 0;
+
+}
+
+
+#stickyCardModal{
+    z-index: 35;
+}

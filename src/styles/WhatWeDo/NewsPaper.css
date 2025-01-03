@@ -1,0 +1,82 @@
+.image1{
+    position: absolute;
+    opacity: 80%;
+    z-index: 30;
+    top: 47%;
+    left: 30%;
+    rotate: -16deg;
+    width: 7vw;
+}
+
+
+
+.expand{
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    opacity: 100%;
+    z-index: 31;
+    top: 0%;
+    left: 0%;
+    rotate: 0deg;
+    backdrop-filter: blur(5px);
+    animation: expand ease-in 0.3s;
+}
+
+
+.image2{
+    position: absolute;
+    opacity: 80%;
+    z-index: 30;
+    top: 64%;
+    left: 45%;
+    rotate: 14deg;
+    width: 7vw;
+}
+
+.image3{
+    position: absolute;
+    opacity: 80%;
+    z-index: 30;
+    top: 34%;
+    right: 30%;
+    rotate: -6deg;
+    width: 7vw;
+}
+
+.image4{
+    position: absolute;
+    opacity: 80%;
+    z-index: 30;
+    top: 67%;
+    right: 25%;
+    rotate: 6deg;
+    width: 7vw;
+}
+
+.image1:hover ,.image2:hover ,.image3:hover , .image4:hover{
+    opacity: 100%;
+}
+
+
+@keyframes expand {
+    from{
+    opacity: 60%;
+    z-index: 30;
+    
+    }
+    to{
+    
+    
+    width: 100vw;
+    height: 100vh;
+    opacity: 100%;
+    z-index: 31;
+    top: 0%;
+    left: 0%;
+    
+    }
+}
