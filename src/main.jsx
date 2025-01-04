@@ -13,6 +13,7 @@ import ToastNotificationProvider from './context/ToastNotificationProvider.jsx'
 import ToastNotification from './components/ToastNotification.jsx'
 import AgentAuthenticationProvider from './context/AgentAuthenticationProvider.jsx'
 import ProtectedRoute from './components/PrivateRoute.jsx'
+import AgentUpdate from './pages/AgentUpdate.jsx'
 
 const isAuthenticated = false
 
@@ -75,6 +76,8 @@ createRoot(document.getElementById('root')).render(
                 <Route path='/bureau' element={<Bureau />} />
 
                 <Route path='/sign_in' element={<SignIn />} />
+
+                <Route path='/agent_update' element={<AgentUpdate />} />
               </Routes>
             </div>
           </div>

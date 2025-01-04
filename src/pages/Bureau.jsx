@@ -142,13 +142,13 @@ const Bureau = () => {
                   <div className='grid grid-cols-2 gap-x-6 gap-y-2 z-10 font-bold text-center tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 my-2 p-3 rounded-md w-full'>
                     <div className='flex items-center font-bold justify-center text-sm text-white'>
                       <span className='font-bold text-white'>
-                        Current Score:
+                        Current Score: &nbsp;
                       </span>{' '}
                       {item.score_count}
                     </div>
                     <div className='flex items-center justify-center text-sm text-white'>
                       <span className='font-bold text-white'>
-                        Previous Score:
+                        Previous Score: &nbsp;
                       </span>{' '}
                       {item.pre_score}
                     </div>
