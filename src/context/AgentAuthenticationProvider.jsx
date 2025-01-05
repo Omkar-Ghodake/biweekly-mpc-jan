@@ -10,7 +10,6 @@ const AgentAuthenticationProvider = ({ children }) => {
     role: null,
     resigned: null,
   })
-  const [token, setToken] = useState(localStorage.getItem('auth-token'))
 
   const getAgent = async () => {
     try {

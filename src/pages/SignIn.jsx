@@ -103,7 +103,7 @@ const SignIn = () => {
         </div>
       </div>
 
-      <Link to={'/landing'}>Home</Link>
+      {/* <Link to={'/landing'}>Home</Link> */}
     </div>
   )
 }

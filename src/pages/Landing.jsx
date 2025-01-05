@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useContext } from 'react'
 import { AiOutlineAim } from 'react-icons/ai'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import landingImage from '../assets/landing_detective.jpg'
 import Button from '../components/Button'
 import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
@@ -36,7 +36,7 @@ const Landing = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, originX: 1 }}
           transition={{ duration: 1.5 }}
-          className='text text-4xl text-red-400 font-bebas tracking-wider'
+          className='text-4xl text-red-400 font-bebas tracking-wider'
         >
           Investigating the Seva trail: Every MP’s contribution revealed.
         </motion.p>
