@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { LuFingerprint } from 'react-icons/lu'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
@@ -54,6 +54,10 @@ const SignIn = () => {
       )
     }
   }
+
+  useEffect(() => {
+    agent.isAuthenticated && navigate('/landing')
+  }, [agent, agent.isAuthenticated, navigate])
 
   return (
     <div className='w-screen h-screen absolute inset-0 flex justify-center items-center'>

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { Router } from 'react-router-dom'
 
 const AgentAuthenticationContext = createContext()
 
@@ -10,6 +11,8 @@ const AgentAuthenticationProvider = ({ children }) => {
     role: null,
     resigned: null,
   })
+
+  // const router = new Router()
 
   const getAgent = async () => {
     try {
@@ -38,9 +41,9 @@ const AgentAuthenticationProvider = ({ children }) => {
     }
   }
 
-  // useEffect(() => {
-  //   getAgent()
-  // }, [])
+  useEffect(() => {
+    getAgent()
+  }, [])
 
   return (
     <AgentAuthenticationContext.Provider value={{ agent, setAgent, getAgent }}>

@@ -7,7 +7,7 @@ import { useContext, useEffect } from 'react'
 import { AgentAuthenticationContext } from './context/AgentAuthenticationProvider'
 
 function App() {
-  const { getAgent } = useContext(AgentAuthenticationContext)
+  const { agent, getAgent } = useContext(AgentAuthenticationContext)
 
   useEffect(() => {
     getAgent()
@@ -25,13 +25,15 @@ function App() {
         transition={{ delay: 2.5 }}
         className='absolute right-10 bottom-10 flex items-center space-x-5 text-6xl duration-150 group'
       >
-        <Link
-          to={'/landing'}
-          className='flex items-center space-x-5 text-stone-800/70 hover:text-stone-800 duration-150'
-        >
-          <span className='font-topSecret'>ENTER BUREAU</span>
-          <FaGun className='text-white/70 group-hover:text-white' />
-        </Link>
+        {agent.isAuthenticated && (
+          <Link
+            to={'/landing'}
+            className={`flex items-center space-x-5 text-stone-800/70 hover:text-stone-800 duration-150`}
+          >
+            <span className='font-topSecret'>ENTER BUREAU</span>
+            <FaGun className='text-white/70 group-hover:text-white' />
+          </Link>
+        )}
       </motion.div>
     </div>
   )

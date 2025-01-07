@@ -9,12 +9,19 @@ const Bureau = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/Data.json')
-        if (!response.ok) {
-          throw new Error('Failed to fetch data')
-        }
+        const response = await fetch('http://localhost:5000/api/auth//agents', {
+          method: 'POST',
+          body: JSON.stringify({
+            authToken: localStorage.getItem('auth-token'),
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
         const jsonData = await response.json()
-        setCarouselData(jsonData)
+
+        setCarouselData(jsonData.agents)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -115,7 +122,7 @@ const Bureau = () => {
                     alt={item.name}
                     className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale '
                   />
-                  <p className='font-bold text-center text-white border-gray-700  border-2 text-sm  p-2 rounded-md w-[200px] tracking-widest'>
+                  <p className='font-bold text-center text-white border-gray-700  border-2 p-2 rounded-md w-[200px] tracking-widest font-mono'>
                     ID: {item.emp_id}
                   </p>
                 </div>
@@ -134,8 +141,9 @@ const Bureau = () => {
                   <h1 className='text-3xl font-bold text-white mb-2 text-center tracking-widest'>
                     MPC-BUG HUNTERS
                   </h1>
-                  <h2 className='text-2xl font-bold text-center text-white mb-2 my-1 z-10 tracking-widest'>
-                    {item.name}
+                  <h2 className='text-2xl font-bold text-center text-white mb-2 my-1 z-10 tracking-widest space-x-2'>
+                    <span className='capitalize text-red-200'>{item.role}</span>
+                    <span>{item.domain_name}</span>
                   </h2>
 
                   {/* Details Grid */}
@@ -144,13 +152,13 @@ const Bureau = () => {
                       <span className='font-bold text-white'>
                         Current Score: &nbsp;
                       </span>{' '}
-                      {item.score_count}
+                      <span className='font-mono'>{item.total_score}</span>
                     </div>
                     <div className='flex items-center justify-center text-sm text-white'>
                       <span className='font-bold text-white'>
                         Previous Score: &nbsp;
                       </span>{' '}
-                      {item.pre_score}
+                      <span className='font-mono'>{item.pre_score}</span>
                     </div>
                   </div>
 
@@ -160,8 +168,10 @@ const Bureau = () => {
                         Courses:
                       </h3>
                       <ul className='list-disc pl-5 text-sm text-white'>
-                        {item.courses.map((course, idx) => (
-                          <li key={idx}>{course}</li>
+                        {item.courses.split(';').map((course) => (
+                          <li key={course} className='my-1'>
+                            {course}
+                          </li>
                         ))}
                       </ul>
                     </div>

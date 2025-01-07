@@ -14,8 +14,6 @@ const Landing = () => {
   //   return <Navigate to={'/sign_in'} />
   // }
 
-  console.log('agent:::', agent)
-
   return (
     <div className='h-[90vh] w-full bg-transparent flex justify-between mt-[10vh] overflow-hidden'>
       <div className='w-fit px-20 pr-0 flex flex-col justify-center space-y-10'>

@@ -1,21 +1,23 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import App from './App.jsx'
+import ProtectedRoute from './components/PrivateRoute.jsx'
+import ToastNotification from './components/ToastNotification.jsx'
+import AgentAuthenticationProvider from './context/AgentAuthenticationProvider.jsx'
+import ToastNotificationProvider from './context/ToastNotificationProvider.jsx'
 import './index.css'
 import Navbar from './layouts/navbar/Navbar.jsx'
+import AgentUpdate from './pages/AgentUpdate.jsx'
 import Black from './pages/Black.jsx'
 import Bureau from './pages/Bureau.jsx'
 import Landing from './pages/Landing.jsx'
 import SignIn from './pages/SignIn.jsx'
 import WhatWeDo from './pages/WhatWeDo.jsx'
-import ToastNotificationProvider from './context/ToastNotificationProvider.jsx'
-import ToastNotification from './components/ToastNotification.jsx'
-import AgentAuthenticationProvider from './context/AgentAuthenticationProvider.jsx'
-import ProtectedRoute from './components/PrivateRoute.jsx'
-import AgentUpdate from './pages/AgentUpdate.jsx'
-
-const isAuthenticated = false
+import Dashboard from './pages/Dashboard.jsx'
+import Exit from './pages/Exit.jsx'
+import UpdateExistingAgent from './pages/UpdateExistingAgent.jsx'
+import CreateNewAgent from './pages/CreateNewAgent.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -30,13 +32,15 @@ createRoot(document.getElementById('root')).render(
             <div className='mt-[10vh] h-full'>
               <Routes>
                 <Route path='/black' element={<Black />} />
+                <Route path='/exit' element={<Exit />} />
+                <Route path='/temp' element={<AgentUpdate />} />
 
-                {/* <Route
+                <Route
                   path='/'
                   element={
-                    <ProtectedRoute>
-                      <App />
-                    </ProtectedRoute>
+                    // <ProtectedRoute>
+                    <App />
+                    // </ProtectedRoute>
                   }
                 />
 
@@ -65,19 +69,36 @@ createRoot(document.getElementById('root')).render(
                       <Bureau />
                     </ProtectedRoute>
                   }
-                /> */}
+                />
 
-                <Route path='/' element={<App />} />
+                <Route
+                  path='/dashboard'
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
-                <Route path='/landing' element={<Landing />} />
+                <Route
+                  path='/dashboard/update-existing-agent'
+                  element={
+                    <ProtectedRoute>
+                      <UpdateExistingAgent />
+                    </ProtectedRoute>
+                  }
+                />
 
-                <Route path='/investigations' element={<WhatWeDo />} />
-
-                <Route path='/bureau' element={<Bureau />} />
+                <Route
+                  path='/dashboard/create-new-agent'
+                  element={
+                    <ProtectedRoute>
+                      <CreateNewAgent />
+                    </ProtectedRoute>
+                  }
+                />
 
                 <Route path='/sign_in' element={<SignIn />} />
-
-                <Route path='/agent_update' element={<AgentUpdate />} />
               </Routes>
             </div>
           </div>

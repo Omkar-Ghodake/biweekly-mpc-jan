@@ -2,6 +2,7 @@ const Agent = require('../models/Agent')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const { capitalizeFirstLetter } = require('../utils')
+const mongoose = require('mongoose')
 
 const JWT_SECRET = process.env.JWT_SECRET
 
@@ -41,7 +42,6 @@ exports.createAgent = async (req, res) => {
         .json({ success: false, message: 'Agent name already exists.' })
 
     if (agent.role !== 'chief' && agent.role !== 'captain') {
-      console.log('agent.role = ' + agent.role)
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
 
@@ -116,6 +116,59 @@ exports.getAgentInfo = async (req, res) => {
       return res.json({ success: false, message: 'Agent not found.' })
 
     return res.json({ success: true, agent: agentInfo })
+  } catch (error) {
+    res.json({ success: false, message: 'Server error occurred.' })
+    console.error(error)
+  }
+}
+
+exports.getAllAgents = async (req, res) => {
+  try {
+    const agents = await Agent.find({})
+
+    if (!agents)
+      return res.json({ success: false, message: 'No agents found.' })
+
+    return res.json({ success: true, agents })
+  } catch (error) {
+    res.json({ success: false, message: 'Server error occurred.' })
+    console.error(error)
+  }
+}
+
+exports.updateAgent = async (req, res) => {
+  try {
+    let {
+      domain_name,
+      emp_id,
+      pre_score,
+      severity_count,
+      total_score,
+      courses,
+      role,
+      resigned,
+    } = req.body
+
+    const agent = req.agent
+
+    if (agent.role !== 'chief' && agent.role !== 'captain') {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
+
+    const existingAgent = await Agent.findOne({ emp_id })
+
+    if (!existingAgent)
+      return res.json({ success: false, message: 'No agent found.' })
+
+    const updatedAgent = await Agent.findOneAndUpdate(
+      existingAgent._id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    )
+
+    return res.json({ success: true, updatedAgent })
   } catch (error) {
     res.json({ success: false, message: 'Server error occurred.' })
     console.error(error)

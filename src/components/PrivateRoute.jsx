@@ -1,17 +1,19 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 
 const ProtectedRoute = ({ children }) => {
-  const { token, agent } = useContext(AgentAuthenticationContext)
+  const { agent } = useContext(AgentAuthenticationContext)
 
   let location = useLocation()
-
-  useEffect(() => {}, [token])
 
   if (!agent.isAuthenticated) {
     return <Navigate to='/sign_in' state={{ from: location }} replace />
   }
+
+  // if (agent.isAuthenticated) {
+  //   return <Navigate to='/sign_in' state={{ from: location }} replace />
+  // }
   return children
 }
 

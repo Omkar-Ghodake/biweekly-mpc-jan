@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import React from 'react'
-import { RiRestartLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import revolver from '../assets/revolver_icon.png'
 

@@ -3,7 +3,14 @@ import NavList from './NavList'
 import { useLocation } from 'react-router-dom'
 
 const Navbar = () => {
-  const showNavbarOnPaths = ['/landing', '/investigations', '/bureau']
+  const showNavbarOnPaths = [
+    '/landing',
+    '/investigations',
+    '/bureau',
+    '/dashboard',
+    '/dashboard/create-new-agent',
+    '/dashboard/update-existing-agent',
+  ]
 
   const { pathname } = useLocation()
 
