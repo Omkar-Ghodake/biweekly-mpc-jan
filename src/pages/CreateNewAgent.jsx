@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Button from '../components/Button'
 import Switch from '../layouts/Switch'
 import { LuAsterisk } from 'react-icons/lu'
@@ -10,7 +10,13 @@ const CreateNewAgent = () => {
     emp_id: '',
     pre_score: '',
     total_score: 0,
-    resigned: false,
+    severity_count: {
+      blocker: 0,
+      critical: 0,
+      major: 0,
+      normal: 0,
+      minor: 0,
+    },
   })
 
   const [severityCount, setSeverityCount] = useState({
@@ -21,20 +27,92 @@ const CreateNewAgent = () => {
     minor: 0,
   })
 
+  const [totalScore, setTotalScore] = useState(0)
+
   const { showToastMessage } = useContext(ToastNotificationContext)
 
   const formRef = useRef(null)
 
-  const setTotalScore = () => {
+  const onSeverityChange = (e) => {
+    setSeverityCount({ ...severityCount, [e.target.name]: e.target.value })
+
     setFormData({
       ...formData,
-      total_score:
-        severityCount.blocker * 10 +
-        severityCount.critical * 8 +
-        severityCount.major * 5 +
-        severityCount.normal * 3 +
-        severityCount.minor,
+      severity_count: {
+        ...formData.severity_count,
+        [e.target.name]: e.target.value,
+      },
     })
+
+    // switch (e.target.name) {
+    // case 'blocker':
+    // setFormData({
+    //   ...formData,
+    //   severityCount: {
+    //     ...severityCount,
+    //     [e.target.name]: parseInt(e.target.value),
+    //   },
+    // })
+    // setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 10)
+    // break
+
+    // case 'critical':
+    // setFormData({
+    //   ...formData,
+    //   severityCount: {
+    //     ...severityCount,
+    //     [e.target.name]: parseInt(e.target.value),
+    //   },
+    // })
+    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 8)
+    //   break
+
+    // case 'major':
+    // setFormData({
+    //   ...formData,
+    //   severityCount: {
+    //     ...severityCount,
+    //     [e.target.name]: parseInt(e.target.value),
+    //   },
+    // })
+    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 5)
+    //   break
+
+    // case 'normal':
+    // setFormData({
+    //   ...formData,
+    //   severityCount: {
+    //     ...severityCount,
+    //     [e.target.name]: parseInt(e.target.value),
+    //   },
+    // })
+    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 3)
+    //   break
+
+    // case 'minor':
+    // setFormData({
+    //   ...formData,
+    //   severityCount: {
+    //     ...severityCount,
+    //     [e.target.name]: parseInt(e.target.value),
+    //   },
+    // })
+    // setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 1)
+    // break
+    // }
+  }
+
+  const calculateTotalScore = () => {
+    let score =
+      parseInt(formData.severity_count.blocker) * 10 +
+      parseInt(formData.severity_count.critical) * 8 +
+      parseInt(formData.severity_count.major) * 5 +
+      parseInt(formData.severity_count.normal) * 3 +
+      parseInt(formData.severity_count.normal)
+
+    setFormData({ ...formData, total_score: score })
+
+    return score
   }
 
   const handleSubmit = async (e) => {
@@ -55,6 +133,7 @@ const CreateNewAgent = () => {
             critical: severityCount.critical,
             major: severityCount.major,
             normal: severityCount.normal,
+            minor: severityCount.minor,
           },
           authToken: localStorage.getItem('auth-token'),
         }),
@@ -70,15 +149,11 @@ const CreateNewAgent = () => {
       formRef.current.reset()
     } else {
     }
+    console.log('json.message', json)
     showToastMessage(json.message)
   }
 
-  const toggleIsResigned = () => {
-    setFormData({ ...formData, resigned: !formData.resigned })
-  }
-
   const onChange = (e) => {
-    // setDetectiveCode(e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
@@ -90,6 +165,8 @@ const CreateNewAgent = () => {
       )
     }
   }
+
+  useEffect(() => {}, [formData, setSeverityCount])
 
   return (
     <div className='create-new-agent h-full flex flex-col justify-center items-center'>
@@ -147,13 +224,8 @@ const CreateNewAgent = () => {
                 <input
                   className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
                   type='number'
-                  onChange={(e) => {
-                    setSeverityCount({
-                      ...severityCount,
-                      blocker: e.target.value,
-                    })
-                    setTotalScore()
-                  }}
+                  name='blocker'
+                  onChange={onSeverityChange}
                 />
               </div>
 
@@ -162,13 +234,8 @@ const CreateNewAgent = () => {
                 <input
                   className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
                   type='number'
-                  onChange={(e) => {
-                    setSeverityCount({
-                      ...severityCount,
-                      critical: e.target.value,
-                    })
-                    setTotalScore()
-                  }}
+                  name='critical'
+                  onChange={onSeverityChange}
                 />
               </div>
 
@@ -177,13 +244,8 @@ const CreateNewAgent = () => {
                 <input
                   className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
                   type='number'
-                  onChange={(e) => {
-                    setSeverityCount({
-                      ...severityCount,
-                      major: e.target.value,
-                    })
-                    setTotalScore()
-                  }}
+                  name='major'
+                  onChange={onSeverityChange}
                 />
               </div>
 
@@ -192,13 +254,8 @@ const CreateNewAgent = () => {
                 <input
                   className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
                   type='number'
-                  onChange={(e) => {
-                    setSeverityCount({
-                      ...severityCount,
-                      normal: e.target.value,
-                    })
-                    setTotalScore()
-                  }}
+                  name='normal'
+                  onChange={onSeverityChange}
                 />
               </div>
 
@@ -207,35 +264,14 @@ const CreateNewAgent = () => {
                 <input
                   className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
                   type='number'
-                  onChange={(e) => {
-                    setSeverityCount({
-                      ...severityCount,
-                      minor: e.target.value,
-                    })
-                    setTotalScore()
-                  }}
+                  name='minor'
+                  onChange={onSeverityChange}
                 />
               </div>
             </div>
           </div>
 
           <div className='input-row flex space-x-5'>
-            <div className='input-group flex flex-col space-y-2'>
-              <label htmlFor='total_score' className=''>
-                Total Score
-              </label>
-
-              <input
-                className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'
-                name='total_score'
-                type='text'
-                value={formData.total_score}
-                onChange={onChange}
-                onInput={maxLengthCheck}
-                maxLength={25}
-                disabled
-              />
-            </div>
             <div className='input-group flex flex-col space-y-2'>
               <label htmlFor='pre_score' className=''>
                 Previous Score
@@ -250,9 +286,19 @@ const CreateNewAgent = () => {
                 maxLength={8}
               />
             </div>
+
+            <div className='input-group flex flex-col space-y-2 invisible'>
+              <label htmlFor='total_score' className=''>
+                Total Score
+              </label>
+
+              <span className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'>
+                {formData.total_score || '0'}
+              </span>
+            </div>
           </div>
 
-          <div className='input-row flex space-x-5'>
+          {/* <div className='input-row flex space-x-5'>
             <div className='input-group flex space-x-5'>
               <label htmlFor='resigned' className='mr-5'>
                 Resigned
@@ -260,7 +306,7 @@ const CreateNewAgent = () => {
 
               <Switch state={formData.resigned} handler={toggleIsResigned} />
             </div>
-          </div>
+          </div> */}
 
           <Button className={'text-base px-5 py-2 font-bold w-full'}>
             CREATE AGENT

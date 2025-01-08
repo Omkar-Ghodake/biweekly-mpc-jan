@@ -10,9 +10,9 @@ const ToastNotification = () => {
       initial={{ opacity: 0, x: '100%' }}
       animate={{
         opacity: 1,
-        x: toastNotificationState.showToast ? '100%' : '100%',
+        x: toastNotificationState.showToast ? 0 : '100%',
       }}
-      className={`absolute right-0 top-10 border-[1px] border-slate-500/50 border-l-white px-5 py-2 font-semibold tracking-wide z-50`}
+      className={`absolute right-0 top-20 border-[1px] border-slate-500/50 border-l-white px-5 py-2 font-semibold tracking-wide z-50`}
     >
       {toastNotificationState.message}
     </motion.div>

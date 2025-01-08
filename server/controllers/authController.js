@@ -13,13 +13,25 @@ exports.createAgent = async (req, res) => {
       emp_id,
       pre_score,
       severity_count,
-      total_score,
       courses,
       role,
       resigned,
     } = req.body
 
     const agent = req.agent
+
+    let totalScore =
+      parseInt(severity_count.blocker) * 10 +
+      parseInt(severity_count.critical) * 8 +
+      parseInt(severity_count.major) * 5 +
+      parseInt(severity_count.normal) * 3 +
+      parseInt(severity_count.minor) * 1
+
+    // console.log(parseInt(severity_count.blocker))
+    // console.log(parseInt(severity_count.critical))
+    // console.log(parseInt(severity_count.major))
+    // console.log(parseInt(severity_count.normal))
+    // console.log(parseInt(severity_count.minor))
 
     if (!domain_name || !emp_id)
       return res
@@ -50,7 +62,7 @@ exports.createAgent = async (req, res) => {
       emp_id,
       pre_score,
       severity_count,
-      total_score,
+      total_score: totalScore,
       courses,
       role,
       resigned,
