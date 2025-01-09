@@ -180,7 +180,11 @@ exports.updateAgent = async (req, res) => {
       { new: true }
     )
 
-    return res.json({ success: true, updatedAgent })
+    return res.json({
+      success: true,
+      message: 'Agent updated successfully.',
+      updatedAgent,
+    })
   } catch (error) {
     res.json({ success: false, message: 'Server error occurred.' })
     console.error(error)

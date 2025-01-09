@@ -203,8 +203,9 @@ const Bureau = () => {
             }`}
             onClick={() => handleThumbnailClick(index)}
           >
+            {console.log('item:', item)}
             <img
-              src={item.image}
+              src={`../assets/profileImages/Mridul.Upadhyay.png`}
               alt={item.name}
               className='w-full h-full object-cover rounded-full'
             />

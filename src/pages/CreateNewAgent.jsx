@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import Button from '../components/Button'
-import Switch from '../layouts/Switch'
+import { IoArrowBackSharp } from 'react-icons/io5'
 import { LuAsterisk } from 'react-icons/lu'
+import { Link } from 'react-router-dom'
+import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 
 const CreateNewAgent = () => {
@@ -17,6 +18,7 @@ const CreateNewAgent = () => {
       normal: 0,
       minor: 0,
     },
+    courses: '',
   })
 
   const [severityCount, setSeverityCount] = useState({
@@ -26,8 +28,6 @@ const CreateNewAgent = () => {
     normal: 0,
     minor: 0,
   })
-
-  const [totalScore, setTotalScore] = useState(0)
 
   const { showToastMessage } = useContext(ToastNotificationContext)
 
@@ -43,76 +43,6 @@ const CreateNewAgent = () => {
         [e.target.name]: e.target.value,
       },
     })
-
-    // switch (e.target.name) {
-    // case 'blocker':
-    // setFormData({
-    //   ...formData,
-    //   severityCount: {
-    //     ...severityCount,
-    //     [e.target.name]: parseInt(e.target.value),
-    //   },
-    // })
-    // setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 10)
-    // break
-
-    // case 'critical':
-    // setFormData({
-    //   ...formData,
-    //   severityCount: {
-    //     ...severityCount,
-    //     [e.target.name]: parseInt(e.target.value),
-    //   },
-    // })
-    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 8)
-    //   break
-
-    // case 'major':
-    // setFormData({
-    //   ...formData,
-    //   severityCount: {
-    //     ...severityCount,
-    //     [e.target.name]: parseInt(e.target.value),
-    //   },
-    // })
-    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 5)
-    //   break
-
-    // case 'normal':
-    // setFormData({
-    //   ...formData,
-    //   severityCount: {
-    //     ...severityCount,
-    //     [e.target.name]: parseInt(e.target.value),
-    //   },
-    // })
-    //   setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 3)
-    //   break
-
-    // case 'minor':
-    // setFormData({
-    //   ...formData,
-    //   severityCount: {
-    //     ...severityCount,
-    //     [e.target.name]: parseInt(e.target.value),
-    //   },
-    // })
-    // setTotalScore(parseInt(totalScore) + parseInt(e.target.value) * 1)
-    // break
-    // }
-  }
-
-  const calculateTotalScore = () => {
-    let score =
-      parseInt(formData.severity_count.blocker) * 10 +
-      parseInt(formData.severity_count.critical) * 8 +
-      parseInt(formData.severity_count.major) * 5 +
-      parseInt(formData.severity_count.normal) * 3 +
-      parseInt(formData.severity_count.normal)
-
-    setFormData({ ...formData, total_score: score })
-
-    return score
   }
 
   const handleSubmit = async (e) => {
@@ -146,10 +76,23 @@ const CreateNewAgent = () => {
     const json = await response.json()
 
     if (json.success) {
+      setFormData({
+        domain_name: '',
+        emp_id: '',
+        pre_score: '',
+        total_score: 0,
+        severity_count: {
+          blocker: 0,
+          critical: 0,
+          major: 0,
+          normal: 0,
+          minor: 0,
+        },
+        resigned: false,
+      })
       formRef.current.reset()
     } else {
     }
-    console.log('json.message', json)
     showToastMessage(json.message)
   }
 
@@ -166,12 +109,24 @@ const CreateNewAgent = () => {
     }
   }
 
-  useEffect(() => {}, [formData, setSeverityCount])
-
   return (
-    <div className='create-new-agent h-full flex flex-col justify-center items-center'>
+    <div className='create-new-agent relative h-full flex flex-col justify-center items-center'>
+      <Link
+        to={'/dashboard'}
+        className='absolute left-[20vw] top-0 text-3xl hover:text-inherit hover:bg-slate-500/40 p-1 rounded-full duration-150'
+      >
+        <IoArrowBackSharp />
+      </Link>
+
       <div className='flex flex-col justify-center items-center -translate-y-10 space-y-5 h-full w-1/2 mx-auto'>
-        <h2 className='text-3xl font-semibold w-full'>Create New Agent</h2>
+        <div className='flex justify-between w-full'>
+          <h2 className='text-3xl font-semibold w-full'>Create New Agent</h2>
+
+          <span className='w-full text-right flex justify-end'>
+            <LuAsterisk className='text-red-200' />{' '}
+            <span className='text-sm'>Indicates mandatory fields</span>
+          </span>
+        </div>
 
         <form
           onSubmit={handleSubmit}
@@ -287,14 +242,22 @@ const CreateNewAgent = () => {
               />
             </div>
 
-            <div className='input-group flex flex-col space-y-2 invisible'>
-              <label htmlFor='total_score' className=''>
-                Total Score
+            <div className='input-group flex flex-col space-y-2'>
+              <label
+                htmlFor='courses'
+                className='flex justify-between items-center'
+              >
+                <span>Courses </span>
+                <span className='text-xs text-red-200'>
+                  Enter courses separated by semicolon (;)
+                </span>
               </label>
 
-              <span className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'>
-                {formData.total_score || '0'}
-              </span>
+              <input
+                className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'
+                name='courses'
+                onChange={onChange}
+              />
             </div>
           </div>
 
