@@ -118,7 +118,7 @@ const Bureau = () => {
                 {/* Image Section */}
                 <div className='flex flex-col items-center justify-center w-[250px] h-[375px] bg-black '>
                   <img
-                    src={item.image}
+                    src={`/profileImages/${item.domain_name}.png`}
                     alt={item.name}
                     className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale '
                   />
@@ -147,20 +147,22 @@ const Bureau = () => {
                   </h2>
 
                   {/* Details Grid */}
-                  <div className='grid grid-cols-2 gap-x-6 gap-y-2 z-10 font-bold text-center tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 my-2 p-3 rounded-md w-full'>
-                    <div className='flex items-center font-bold justify-center text-sm text-white'>
-                      <span className='font-bold text-white'>
-                        Current Score: &nbsp;
-                      </span>{' '}
-                      <span className='font-mono'>{item.total_score}</span>
+                  {
+                    <div className='grid grid-cols-2 gap-x-6 gap-y-2 z-10 font-bold text-center tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 my-2 p-3 rounded-md w-full'>
+                      <div className='flex items-center font-bold justify-center text-sm text-white'>
+                        <span className='font-bold text-white'>
+                          Current Score: &nbsp;
+                        </span>{' '}
+                        <span className='font-mono'>{item.total_score}</span>
+                      </div>
+                      <div className='flex items-center justify-center text-sm text-white'>
+                        <span className='font-bold text-white'>
+                          Previous Score: &nbsp;
+                        </span>{' '}
+                        <span className='font-mono'>{item.pre_score}</span>
+                      </div>
                     </div>
-                    <div className='flex items-center justify-center text-sm text-white'>
-                      <span className='font-bold text-white'>
-                        Previous Score: &nbsp;
-                      </span>{' '}
-                      <span className='font-mono'>{item.pre_score}</span>
-                    </div>
-                  </div>
+                  }
 
                   {item.courses && item.courses.length > 0 && (
                     <div className='col-span-2 font-bold my-2 tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 p-3 rounded-md w-full'>
@@ -203,9 +205,8 @@ const Bureau = () => {
             }`}
             onClick={() => handleThumbnailClick(index)}
           >
-            {console.log('item:', item)}
             <img
-              src={`../assets/profileImages/Mridul.Upadhyay.png`}
+              src={`/profileImages/${item.domain_name}.png`}
               alt={item.name}
               className='w-full h-full object-cover rounded-full'
             />
