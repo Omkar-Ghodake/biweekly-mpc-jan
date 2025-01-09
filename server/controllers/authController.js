@@ -197,3 +197,33 @@ exports.updateAgent = async (req, res) => {
     console.error(error)
   }
 }
+
+exports.deleteAgent = async (req, res) => {
+  try {
+    let { emp_id } = req.body
+
+    const agent = req.agent
+
+    if (agent.role !== 'chief' && agent.role !== 'captain') {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
+
+    const existingAgent = await Agent.findOne({ emp_id })
+
+    if (!existingAgent)
+      return res.json({ success: false, message: 'No agent found.' })
+
+    const deletedAgent = await Agent.findOneAndDelete(existingAgent._id, {
+      new: true,
+    })
+
+    return res.json({
+      success: true,
+      message: 'Agent deleted successfully.',
+      deletedAgent,
+    })
+  } catch (error) {
+    res.json({ success: false, message: 'Server error occurred.' })
+    console.error(error)
+  }
+}

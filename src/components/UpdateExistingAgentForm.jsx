@@ -30,6 +30,8 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     minor: 0,
   })
 
+  const [isConfirmDeleteModalOn, setIsConfirmDeleteModalOn] = useState(false)
+
   const { showToastMessage } = useContext(ToastNotificationContext)
   const { getAllAgents } = useContext(AllAgentsContext)
 
@@ -79,7 +81,9 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
 
     if (json.success) {
       setSelectedAgent(null)
+
       getAllAgents()
+
       formRef.current.reset()
       setFormData({
         domain_name: '',
@@ -95,10 +99,54 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
         },
         resigned: false,
       })
-    } else {
     }
 
-    console.log('json:', json)
+    showToastMessage(json.message)
+  }
+
+  const handleDeleteAgent = async () => {
+    const response = await fetch(
+      'http://localhost:5000/api/auth/delete-agent',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          emp_id: selectedAgent.emp_id,
+          authToken: localStorage.getItem('auth-token'),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+
+    const json = await response.json()
+
+    if (json.success) {
+      getAllAgents()
+
+      setSelectedAgent(null)
+
+      setIsConfirmDeleteModalOn(false)
+
+      getAllAgents()
+
+      formRef.current.reset()
+      setFormData({
+        domain_name: '',
+        emp_id: '',
+        pre_score: '',
+        total_score: 0,
+        severity_count: {
+          blocker: 0,
+          critical: 0,
+          major: 0,
+          normal: 0,
+          minor: 0,
+        },
+        resigned: false,
+      })
+    }
+
     showToastMessage(json.message)
   }
 
@@ -279,7 +327,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                   </div>
                 )}
 
-                <div className='input-row flex space-x-5'>
+                <div className='input-row flex justify-between space-x-5'>
                   <div className='input-group flex space-x-5'>
                     <label htmlFor='resigned' className='mr-5'>
                       Resigned
@@ -290,6 +338,15 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                       handler={toggleIsResigned}
                     />
                   </div>
+
+                  <div className='input-group flex justify-end space-x-5'>
+                    <p
+                      className='border-2 border-red-500 text-red-500 hover:bg-red-500/20 rounded-lg px-4 py-2 duration-150 cursor-pointer font-medium'
+                      onClick={() => setIsConfirmDeleteModalOn(true)}
+                    >
+                      Delete Agent
+                    </p>
+                  </div>
                 </div>
 
                 <Button className={'text-base px-5 py-2 font-bold w-full'}>
@@ -298,6 +355,47 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
               </form>
             </div>
           </div>
+
+          {isConfirmDeleteModalOn && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className='absolute w-screen h-screen p-5 rounded-lg delete-agent-confirmation backdrop-blur-md z-[60] flex justify-center items-center'
+            >
+              <div className='relative h-fit w-1/2 flex flex-col items-center bg-black p-5 border-2 border-white/30 rounded-lg space-y-5'>
+                <IoClose
+                  className='absolute top-5 right-5 text-4xl p-2 rounded-full cursor-pointer hover:bg-slate-500/30 duration-150'
+                  onClick={() => setIsConfirmDeleteModalOn(false)}
+                />
+                <p className='text-2xl'>
+                  Do you really want to delete{' '}
+                  <b>{selectedAgent.domain_name}</b> with Detective Code{' '}
+                  <b>{selectedAgent.emp_id}</b>?
+                </p>
+
+                <p className='w-full italic'>
+                  <span className='font-semibold'>Warning:</span> This action
+                  cannot be undone.
+                </p>
+
+                <div className='flex justify-end w-full space-x-5 font-medium'>
+                  <p
+                    className='border-2 border-white/70 text-white hover:bg-white/10 rounded-lg px-4 py-2 duration-150 cursor-pointer'
+                    onClick={() => setIsConfirmDeleteModalOn(false)}
+                  >
+                    Cancel
+                  </p>
+
+                  <p
+                    className='border-2 border-red-500 text-red-500 hover:bg-red-500/20 rounded-lg px-4 py-2 duration-150 cursor-pointer'
+                    onClick={handleDeleteAgent}
+                  >
+                    Delete Agent
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </>

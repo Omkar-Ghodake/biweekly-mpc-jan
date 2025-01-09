@@ -8,7 +8,11 @@ import UpdateExistingAgentForm from '../components/UpdateExistingAgentForm'
 const UpdateAgent = () => {
   const [selectedAgent, setSelectedAgent] = useState(null)
 
-  const { allAgents } = useContext(AllAgentsContext)
+  const { allAgents, getAllAgents } = useContext(AllAgentsContext)
+
+  useState(() => {
+    getAllAgents()
+  }, [])
 
   return (
     <>

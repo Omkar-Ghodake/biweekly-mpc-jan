@@ -5,6 +5,7 @@ const {
   getAgentInfo,
   getAllAgents,
   updateAgent,
+  deleteAgent,
 } = require('../controllers/authController')
 const verifyAgent = require('../middlewares/verifyAgent')
 const router = express.Router()
@@ -18,5 +19,7 @@ router.post('/get-agent', verifyAgent, getAgentInfo)
 router.post('/agents', verifyAgent, getAllAgents)
 
 router.post('/update-agent', verifyAgent, updateAgent)
+
+router.post('/delete-agent', verifyAgent, deleteAgent)
 
 module.exports = router
