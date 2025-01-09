@@ -17,17 +17,34 @@ const Bureau = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-        })
+        });
 
-        const jsonData = await response.json()
+        const jsonData = await response.json();
 
-        setCarouselData(jsonData.agents)
+        
+        const findChief = jsonData.agents.find(agent => agent.role === 'chief');
+        const otherAgents = jsonData.agents.filter(agent => agent.role !== 'chief');
+
+        const sortedOtherAgents = otherAgents.sort((a, b) => b.total_score - a.total_score);
+
+        const sortedAgents = [findChief, ...sortedOtherAgents];
+
+        console.log(findChief)
+        console.log('Sorted array: ', sortedAgents);
+
+
+        setCarouselData(sortedAgents);
+
       } catch (error) {
-        console.error('Error fetching data:', error)
+        console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  }, [])
+    };
+
+    fetchData();
+  }, []);
+
+
+
 
   const handlePrevious = () => {
     setRotateClass('rotate-left')
@@ -83,7 +100,7 @@ const Bureau = () => {
       >
         <div className='w-[300px] h-[350px] bg-gray-800 shadow-lg rounded-lg overflow-hidden'>
           <img
-            src={carouselData[getAdjacentIndex(-1)].image}
+            src={`/profileImages/${carouselData[getAdjacentIndex(-1)].domain_name}.png`}
             alt={carouselData[getAdjacentIndex(-1)].name}
             className='w-full h-full object-cover grayscale'
           />
@@ -95,7 +112,7 @@ const Bureau = () => {
       >
         <div className='w-[300px] h-[350px] bg-gray-800 shadow-lg rounded-lg overflow-hidden'>
           <img
-            src={carouselData[getAdjacentIndex(1)].image}
+            src={`/profileImages/${carouselData[getAdjacentIndex(1)].domain_name}.png`}
             alt={carouselData[getAdjacentIndex(1)].name}
             className='w-full h-full object-cover grayscale'
           />
@@ -154,7 +171,6 @@ const Bureau = () => {
                           Current Score: &nbsp;
                         </span>{' '}
                         <span className='font-mono'>{item.total_score}</span>
-                        {console.log('item:', item)}
                       </div>
                       <div className='flex items-center justify-center text-sm text-white'>
                         <span className='font-bold text-white'>
@@ -171,14 +187,11 @@ const Bureau = () => {
                         Courses:
                       </h3>
                       <ul className='list-disc pl-5 text-sm text-white'>
-                        {item.courses.split(';').map(
-                          (course) =>
-                            course.length > 0 && (
-                              <li key={course} className='my-1'>
-                                {course}
-                              </li>
-                            )
-                        )}
+                        {item.courses.split(';').map((course) => (
+                          <li key={course} className='my-1'>
+                            {course}
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   )}
@@ -202,11 +215,10 @@ const Bureau = () => {
         {carouselData.map((item, index) => (
           <div
             key={index}
-            className={`w-10 h-10 rounded-full border-4 cursor-pointer transition-all duration-300 ${
-              currentIndex === index
+            className={`w-10 h-10 rounded-full border-4 cursor-pointer transition-all duration-300 ${currentIndex === index
                 ? 'border-gray-200 scale-110'
                 : 'border-transparent'
-            }`}
+              }`}
             onClick={() => handleThumbnailClick(index)}
           >
             <img
