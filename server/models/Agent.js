@@ -26,6 +26,7 @@ const AgentSchema = new Schema({
   },
   total_score: Number,
   courses: String,
+  about: String,
   role: {
     type: String,
     default: 'agent',

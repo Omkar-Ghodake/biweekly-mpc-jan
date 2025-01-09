@@ -17,34 +17,34 @@ const Bureau = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-        });
+        })
 
-        const jsonData = await response.json();
+        const jsonData = await response.json()
 
-        
-        const findChief = jsonData.agents.find(agent => agent.role === 'chief');
-        const otherAgents = jsonData.agents.filter(agent => agent.role !== 'chief');
+        const findChief = jsonData.agents.find(
+          (agent) => agent.role === 'chief'
+        )
+        const otherAgents = jsonData.agents.filter(
+          (agent) => agent.role !== 'chief'
+        )
 
-        const sortedOtherAgents = otherAgents.sort((a, b) => b.total_score - a.total_score);
+        const sortedOtherAgents = otherAgents.sort(
+          (a, b) => b.total_score - a.total_score
+        )
 
-        const sortedAgents = [findChief, ...sortedOtherAgents];
+        const sortedAgents = [findChief, ...sortedOtherAgents]
 
         console.log(findChief)
-        console.log('Sorted array: ', sortedAgents);
+        console.log('Sorted array: ', sortedAgents)
 
-
-        setCarouselData(sortedAgents);
-
+        setCarouselData(sortedAgents)
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error)
       }
-    };
+    }
 
-    fetchData();
-  }, []);
-
-
-
+    fetchData()
+  }, [])
 
   const handlePrevious = () => {
     setRotateClass('rotate-left')
@@ -100,7 +100,9 @@ const Bureau = () => {
       >
         <div className='w-[300px] h-[350px] bg-gray-800 shadow-lg rounded-lg overflow-hidden'>
           <img
-            src={`/profileImages/${carouselData[getAdjacentIndex(-1)].domain_name}.png`}
+            src={`/profileImages/${
+              carouselData[getAdjacentIndex(-1)].domain_name
+            }.png`}
             alt={carouselData[getAdjacentIndex(-1)].name}
             className='w-full h-full object-cover grayscale'
           />
@@ -112,7 +114,9 @@ const Bureau = () => {
       >
         <div className='w-[300px] h-[350px] bg-gray-800 shadow-lg rounded-lg overflow-hidden'>
           <img
-            src={`/profileImages/${carouselData[getAdjacentIndex(1)].domain_name}.png`}
+            src={`/profileImages/${
+              carouselData[getAdjacentIndex(1)].domain_name
+            }.png`}
             alt={carouselData[getAdjacentIndex(1)].name}
             className='w-full h-full object-cover grayscale'
           />
@@ -133,11 +137,11 @@ const Bureau = () => {
               {/* Investigator Card */}
               <div className='flex w-full md:w-3/4 lg:w-[850px] h-[350px] bg-black shadow-xl rounded-lg overflow-hidden  border border-gray-700 '>
                 {/* Image Section */}
-                <div className='flex flex-col items-center justify-center w-[250px] h-[375px] bg-black '>
+                <div className='flex flex-col items-center justify-center w-[250px] h-[375px]'>
                   <img
                     src={`/profileImages/${item.domain_name}.png`}
                     alt={item.name}
-                    className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale '
+                    className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale'
                   />
                   <p className='font-bold text-center text-white border-gray-700  border-2 p-2 rounded-md w-[200px] tracking-widest font-mono'>
                     ID: {item.emp_id}
@@ -145,7 +149,7 @@ const Bureau = () => {
                 </div>
 
                 {/* Text Section */}
-                <div className='relative w-2/3 p-3 flex flex-col justify-start '>
+                <div className='relative w-2/3 p-3 flex flex-col justify-center'>
                   {/*LOGO (Centered in Text Section) */}
                   <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0'>
                     <img
@@ -164,7 +168,7 @@ const Bureau = () => {
                   </h2>
 
                   {/* Details Grid */}
-                  {
+                  {item.role !== 'chief' ? (
                     <div className='grid grid-cols-2 gap-x-6 gap-y-2 z-10 font-bold text-center tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 my-2 p-3 rounded-md w-full'>
                       <div className='flex items-center font-bold justify-center text-sm text-white'>
                         <span className='font-bold text-white'>
@@ -179,7 +183,9 @@ const Bureau = () => {
                         <span className='font-mono'>{item.pre_score}</span>
                       </div>
                     </div>
-                  }
+                  ) : (
+                    <div></div>
+                  )}
 
                   {item.courses && item.courses.length > 0 && (
                     <div className='col-span-2 font-bold my-2 tracking-widest text-black bg-transparent text-lg border-solid border-2 border-gray-700 p-3 rounded-md w-full'>
@@ -215,10 +221,11 @@ const Bureau = () => {
         {carouselData.map((item, index) => (
           <div
             key={index}
-            className={`w-10 h-10 rounded-full border-4 cursor-pointer transition-all duration-300 ${currentIndex === index
+            className={`w-10 h-10 rounded-full border-4 cursor-pointer transition-all duration-300 ${
+              currentIndex === index
                 ? 'border-gray-200 scale-110'
                 : 'border-transparent'
-              }`}
+            }`}
             onClick={() => handleThumbnailClick(index)}
           >
             <img

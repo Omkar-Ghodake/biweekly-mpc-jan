@@ -93,10 +93,12 @@ const SignIn = () => {
               <input
                 className='outline-none bg-black border border-red-500 px-4 py-2 text-xl font-semibold text-center tracking-[10px] w-full font-mono'
                 name='detectiveCode'
-                type='number'
+                // type='number'
                 onChange={onChange}
                 onInput={maxLengthCheck}
                 maxLength={8}
+                type='number'
+                onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
               />
             </div>
 
