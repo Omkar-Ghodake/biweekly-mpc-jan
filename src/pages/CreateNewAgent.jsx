@@ -4,6 +4,7 @@ import { LuAsterisk } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
+import { AllAgentsContext } from '../context/AllAgentsProvider'
 
 const CreateNewAgent = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +31,7 @@ const CreateNewAgent = () => {
   })
 
   const { showToastMessage } = useContext(ToastNotificationContext)
+  const { getAllAgents } = useContext(AllAgentsContext)
 
   const formRef = useRef(null)
 
@@ -65,6 +67,7 @@ const CreateNewAgent = () => {
             normal: severityCount.normal,
             minor: severityCount.minor,
           },
+          courses: formData.courses,
           authToken: localStorage.getItem('auth-token'),
         }),
         headers: {
@@ -76,6 +79,7 @@ const CreateNewAgent = () => {
     const json = await response.json()
 
     if (json.success) {
+      getAllAgents()
       setFormData({
         domain_name: '',
         emp_id: '',
@@ -88,7 +92,7 @@ const CreateNewAgent = () => {
           normal: 0,
           minor: 0,
         },
-        resigned: false,
+        courses: '',
       })
       formRef.current.reset()
     } else {

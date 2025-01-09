@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
-import { LuAsterisk } from 'react-icons/lu'
 import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 import Switch from '../layouts/Switch'
+import { AllAgentsContext } from '../context/AllAgentsProvider'
 
 const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   const [formData, setFormData] = useState({
@@ -31,6 +31,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   })
 
   const { showToastMessage } = useContext(ToastNotificationContext)
+  const { getAllAgents } = useContext(AllAgentsContext)
 
   const formRef = useRef(null)
 
@@ -40,7 +41,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     setFormData({
       ...formData,
       severity_count: {
-        ...formData.severity_count,
+        ...formData?.severity_count,
         [e.target.name]: e.target.value,
       },
     })
@@ -54,11 +55,11 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
       {
         method: 'POST',
         body: JSON.stringify({
-          domain_name: formData.domain_name,
+          domain_name: formData?.domain_name,
           emp_id: selectedAgent.emp_id,
-          pre_score: formData.pre_score,
-          total_score: formData.total_score,
-          resigned: formData.resigned,
+          pre_score: formData?.pre_score,
+          total_score: formData?.total_score,
+          resigned: formData?.resigned,
           severity_count: {
             blocker: severityCount.blocker,
             critical: severityCount.critical,
@@ -77,6 +78,8 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     const json = await response.json()
 
     if (json.success) {
+      setSelectedAgent(null)
+      getAllAgents()
       formRef.current.reset()
       setFormData({
         domain_name: '',
@@ -100,7 +103,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   }
 
   const toggleIsResigned = () => {
-    setFormData({ ...formData, resigned: !formData.resigned })
+    setFormData({ ...formData, resigned: !formData?.resigned })
   }
 
   const onChange = (e) => {
@@ -108,7 +111,10 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setFormData(selectedAgent)
+    setSeverityCount(selectedAgent?.severity_count)
+  }, [selectedAgent])
 
   const maxLengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
@@ -153,6 +159,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                       className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'
                       name='domain_name'
                       type='text'
+                      value={formData?.domain_name}
                       onChange={onChange}
                       onInput={maxLengthCheck}
                       maxLength={25}
@@ -170,7 +177,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                       className='outline-none rounded-md bg-black border-2 border-slate-500/30 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px] text-white/70 cursor-not-allowed'
                       name='emp_id'
                       type='number'
-                      value={selectedAgent.emp_id}
+                      value={formData?.emp_id}
                       onChange={onChange}
                       onInput={maxLengthCheck}
                       maxLength={8}
@@ -179,88 +186,98 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                   </div>
                 </div>
 
-                <div className='input-row flex flex-col space-y-2'>
-                  <p>Enter Severities</p>
+                {formData?.role !== 'chief' && (
+                  <div className='input-row flex flex-col space-y-2'>
+                    <p>Enter Severities</p>
 
-                  <div className='grid grid-cols-3 gap-x-5 gap-y-5'>
-                    <div className='flex justify-between items-center w-full space-x-2'>
-                      <p className='min-w-[4rem] text-base'>Blocker</p>{' '}
-                      <input
-                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                        type='number'
-                        name='blocker'
-                        onChange={onSeverityChange}
-                      />
-                    </div>
+                    <div className='grid grid-cols-3 gap-x-5 gap-y-5'>
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Blocker</p>{' '}
+                        <input
+                          className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                          type='number'
+                          name='blocker'
+                          value={formData?.severity_count.blocker}
+                          onChange={onSeverityChange}
+                        />
+                      </div>
 
-                    <div className='flex justify-between items-center w-full space-x-2'>
-                      <p className='min-w-[4rem] text-base'>Critical</p>{' '}
-                      <input
-                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                        type='number'
-                        name='critical'
-                        onChange={onSeverityChange}
-                      />
-                    </div>
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Critical</p>{' '}
+                        <input
+                          className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                          type='number'
+                          name='critical'
+                          value={formData?.severity_count.critical}
+                          onChange={onSeverityChange}
+                        />
+                      </div>
 
-                    <div className='flex justify-between items-center w-full space-x-2'>
-                      <p className='min-w-[4rem] text-base'>Major</p>{' '}
-                      <input
-                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                        type='number'
-                        name='major'
-                        onChange={onSeverityChange}
-                      />
-                    </div>
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Major</p>{' '}
+                        <input
+                          className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                          type='number'
+                          name='major'
+                          value={formData?.severity_count.major}
+                          onChange={onSeverityChange}
+                        />
+                      </div>
 
-                    <div className='flex justify-between items-center w-full space-x-2'>
-                      <p className='min-w-[4rem] text-base'>Normal</p>{' '}
-                      <input
-                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                        type='number'
-                        name='normal'
-                        onChange={onSeverityChange}
-                      />
-                    </div>
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Normal</p>{' '}
+                        <input
+                          className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                          type='number'
+                          name='normal'
+                          value={formData?.severity_count.normal}
+                          onChange={onSeverityChange}
+                        />
+                      </div>
 
-                    <div className='flex justify-between items-center w-full space-x-2'>
-                      <p className='min-w-[4rem] text-base'>Minor</p>{' '}
-                      <input
-                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                        type='number'
-                        name='minor'
-                        onChange={onSeverityChange}
-                      />
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Minor</p>{' '}
+                        <input
+                          className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                          type='number'
+                          name='minor'
+                          value={formData?.severity_count.minor}
+                          onChange={onSeverityChange}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className='input-row flex space-x-5'>
-                  <div className='input-group flex flex-col space-y-2'>
-                    <label htmlFor='pre_score' className=''>
-                      Previous Score
-                    </label>
+                {formData?.role !== 'chief' && (
+                  <div className='input-row flex space-x-5'>
+                    <div className='input-group flex flex-col space-y-2'>
+                      <label htmlFor='pre_score' className=''>
+                        Previous Score
+                      </label>
 
-                    <input
-                      className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
-                      name='pre_score'
-                      type='number'
-                      onChange={onChange}
-                      onInput={maxLengthCheck}
-                      maxLength={8}
-                    />
+                      <input
+                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px]'
+                        name='pre_score'
+                        type='number'
+                        value={formData?.pre_score}
+                        onChange={onChange}
+                        onInput={maxLengthCheck}
+                        maxLength={8}
+                      />
+                    </div>
+
+                    <div className='input-group flex flex-col space-y-2 invisible'>
+                      <label htmlFor='total_score' className=''>
+                        Total Score
+                      </label>
+
+                      <span className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'>
+                        {formData?.total_score || '0'}
+                      </span>
+                    </div>
                   </div>
-
-                  <div className='input-group flex flex-col space-y-2 invisible'>
-                    <label htmlFor='total_score' className=''>
-                      Total Score
-                    </label>
-
-                    <span className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'>
-                      {formData.total_score || '0'}
-                    </span>
-                  </div>
-                </div>
+                )}
 
                 <div className='input-row flex space-x-5'>
                   <div className='input-group flex space-x-5'>
@@ -269,7 +286,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                     </label>
 
                     <Switch
-                      state={formData.resigned}
+                      state={formData?.resigned}
                       handler={toggleIsResigned}
                     />
                   </div>

@@ -154,6 +154,7 @@ const Bureau = () => {
                           Current Score: &nbsp;
                         </span>{' '}
                         <span className='font-mono'>{item.total_score}</span>
+                        {console.log('item:', item)}
                       </div>
                       <div className='flex items-center justify-center text-sm text-white'>
                         <span className='font-bold text-white'>
@@ -170,11 +171,14 @@ const Bureau = () => {
                         Courses:
                       </h3>
                       <ul className='list-disc pl-5 text-sm text-white'>
-                        {item.courses.split(';').map((course) => (
-                          <li key={course} className='my-1'>
-                            {course}
-                          </li>
-                        ))}
+                        {item.courses.split(';').map(
+                          (course) =>
+                            course.length > 0 && (
+                              <li key={course} className='my-1'>
+                                {course}
+                              </li>
+                            )
+                        )}
                       </ul>
                     </div>
                   )}

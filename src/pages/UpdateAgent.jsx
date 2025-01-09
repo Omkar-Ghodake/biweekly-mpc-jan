@@ -27,6 +27,7 @@ const UpdateAgent = () => {
             allAgents.length > 0 &&
             allAgents.map((agent, index) => (
               <motion.div
+                key={agent.emp_id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.02 }}

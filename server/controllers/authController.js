@@ -136,7 +136,7 @@ exports.getAgentInfo = async (req, res) => {
 
 exports.getAllAgents = async (req, res) => {
   try {
-    const agents = await Agent.find({})
+    const agents = await Agent.find({}).sort({ domain_name: 1 })
 
     if (!agents)
       return res.json({ success: false, message: 'No agents found.' })
@@ -162,6 +162,13 @@ exports.updateAgent = async (req, res) => {
     } = req.body
 
     const agent = req.agent
+
+    req.body.total_score =
+      parseInt(severity_count.blocker) * 10 +
+      parseInt(severity_count.critical) * 8 +
+      parseInt(severity_count.major) * 5 +
+      parseInt(severity_count.normal) * 3 +
+      parseInt(severity_count.minor) * 1
 
     if (agent.role !== 'chief' && agent.role !== 'captain') {
       return res.json({ success: false, message: 'Unauthorized activity.' })
