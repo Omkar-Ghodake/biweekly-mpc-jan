@@ -37,7 +37,7 @@ function App() {
             <p className='text-3xl text-red-200'>
               You are not authorized to access the Secret Bureau!
             </p>
-            <p className='text-5xl tracking-wider'>
+            <p className='text-4xl tracking-wider leading-[3rem]'>
               Authenticate yourself to access the Secret Agent's Bureau.
             </p>
           </div>
@@ -53,7 +53,7 @@ function App() {
         {agent.isAuthenticated ? (
           <Link
             to={'/landing'}
-            className={`flex items-center space-x-5 text-red-500 hover:text-red-400 duration-150`}
+            className={`flex items-center space-x-5 text-stone-600/80 hover:text-stone-700 duration-150`}
           >
             <span className='font-topSecret'>ENTER BUREAU</span>
             <FaGun className='text-white/70 group-hover:text-white' />

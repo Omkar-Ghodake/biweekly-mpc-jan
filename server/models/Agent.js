@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema } = mongoose
+const { Schema, model } = mongoose
 
 const AgentSchema = new Schema({
   domain_name: {
@@ -37,4 +37,4 @@ const AgentSchema = new Schema({
   },
 })
 
-module.exports = mongoose.model('Agent', AgentSchema)
+module.exports = model('Agent', AgentSchema)

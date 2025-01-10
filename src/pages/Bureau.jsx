@@ -149,7 +149,11 @@ const Bureau = () => {
                 </div>
 
                 {/* Text Section */}
-                <div className='relative w-2/3 p-3 flex flex-col justify-center'>
+                <div
+                  className={`relative w-2/3 p-3 flex flex-col ${
+                    item.role === 'chief' ? 'justify-center' : 'justify-start'
+                  }`}
+                >
                   {/*LOGO (Centered in Text Section) */}
                   <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0'>
                     <img
@@ -184,7 +188,9 @@ const Bureau = () => {
                       </div>
                     </div>
                   ) : (
-                    <div></div>
+                    <div className='text-center uppercase mt-5 text-3xl font-semibold text-slate-500 font-mono tracking-wider'>
+                      Captain of Direction
+                    </div>
                   )}
 
                   {item.courses && item.courses.length > 0 && (
@@ -193,11 +199,14 @@ const Bureau = () => {
                         Courses:
                       </h3>
                       <ul className='list-disc pl-5 text-sm text-white'>
-                        {item.courses.split(';').map((course) => (
-                          <li key={course} className='my-1'>
-                            {course}
-                          </li>
-                        ))}
+                        {item.courses.split(';').map(
+                          (course) =>
+                            course.length > 0 && (
+                              <li key={course} className='my-1'>
+                                {course}
+                              </li>
+                            )
+                        )}
                       </ul>
                     </div>
                   )}

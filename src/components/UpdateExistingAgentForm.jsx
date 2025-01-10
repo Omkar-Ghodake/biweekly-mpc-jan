@@ -69,6 +69,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
             normal: severityCount.normal,
             minor: severityCount.minor,
           },
+          courses: formData?.courses,
           authToken: localStorage.getItem('auth-token'),
         }),
         headers: {
@@ -97,6 +98,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
           normal: 0,
           minor: 0,
         },
+        courses: '',
         resigned: false,
       })
     }
@@ -143,6 +145,7 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
           normal: 0,
           minor: 0,
         },
+        courses: '',
         resigned: false,
       })
     }
@@ -315,19 +318,23 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                       />
                     </div>
 
-                    <div className='input-group flex flex-col space-y-2 invisible'>
-                      <label htmlFor='total_score' className=''>
-                        Total Score
+                    <div className='input-group flex flex-col space-y-2'>
+                      <label htmlFor='courses' className=''>
+                        Courses
                       </label>
 
-                      <span className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'>
-                        {formData?.total_score || '0'}
-                      </span>
+                      <input
+                        className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono'
+                        name='courses'
+                        type='text'
+                        value={formData?.courses}
+                        onChange={onChange}
+                      />
                     </div>
                   </div>
                 )}
 
-                <div className='input-row flex justify-between space-x-5'>
+                <div className='input-row flex items-center justify-between space-x-5'>
                   <div className='input-group flex space-x-5'>
                     <label htmlFor='resigned' className='mr-5'>
                       Resigned
