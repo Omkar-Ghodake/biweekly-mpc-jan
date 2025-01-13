@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
+import axios from 'axios'
 
 const CreateNewAgent = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const CreateNewAgent = () => {
     minor: 0,
   })
 
-  const [file, setFile] = useState()
+  const [agentImage, setAgentImage] = useState('')
 
   const { showToastMessage } = useContext(ToastNotificationContext)
   const { getAllAgents } = useContext(AllAgentsContext)
@@ -49,65 +50,104 @@ const CreateNewAgent = () => {
     })
   }
 
+  const uploadImage = async () => {
+    try {
+      const file = agentImage
+
+      const renamedFile = new File([file], `${formData.domain_name}.png`, {
+        type: file.type,
+      })
+
+      const form = new FormData()
+      form.append('image', renamedFile)
+
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: form,
+      })
+
+      const json = await response.json()
+
+      return json
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    file.name = formData.domain_name
-    console.log('file:', file.name)
+    try {
+      const response = await fetch(
+        'http://localhost:5000/api/auth/create-agent',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            domain_name: formData.domain_name,
+            emp_id: formData.emp_id,
+            pre_score: formData.pre_score,
+            total_score: formData.total_score,
+            resigned: formData.resigned,
+            severity_count: {
+              blocker: severityCount.blocker,
+              critical: severityCount.critical,
+              major: severityCount.major,
+              normal: severityCount.normal,
+              minor: severityCount.minor,
+            },
+            courses: formData.courses,
+            authToken: localStorage.getItem('auth-token'),
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
-    // const response = await fetch(
-    //   'http://localhost:5000/api/auth/create-agent',
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       domain_name: formData.domain_name,
-    //       emp_id: formData.emp_id,
-    //       pre_score: formData.pre_score,
-    //       total_score: formData.total_score,
-    //       resigned: formData.resigned,
-    //       severity_count: {
-    //         blocker: severityCount.blocker,
-    //         critical: severityCount.critical,
-    //         major: severityCount.major,
-    //         normal: severityCount.normal,
-    //         minor: severityCount.minor,
-    //       },
-    //       courses: formData.courses,
-    //       authToken: localStorage.getItem('auth-token'),
-    //     }),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   }
-    // )
+      const json = await response.json()
 
-    // const json = await response.json()
+      if (json.success) {
+        const imageUpload = await uploadImage()
 
-    // if (json.success) {
-    //   getAllAgents()
-    //   setFormData({
-    //     domain_name: '',
-    //     emp_id: '',
-    //     pre_score: '',
-    //     total_score: 0,
-    //     severity_count: {
-    //       blocker: 0,
-    //       critical: 0,
-    //       major: 0,
-    //       normal: 0,
-    //       minor: 0,
-    //     },
-    //     courses: '',
-    //   })
-    //   formRef.current.reset()
-    // }
-    // showToastMessage(json.message)
+        // const imageJson = imageUpload.json()
+
+        if (!imageUpload.success) {
+          throw new Error({ message: 'Error uploading image' })
+        }
+
+        getAllAgents()
+
+        setAgentImage('')
+        setFormData({
+          domain_name: '',
+          emp_id: '',
+          pre_score: '',
+          total_score: 0,
+          severity_count: {
+            blocker: 0,
+            critical: 0,
+            major: 0,
+            normal: 0,
+            minor: 0,
+          },
+          courses: '',
+        })
+        formRef.current.reset()
+      }
+
+      showToastMessage(json.message)
+    } catch (error) {
+      showToastMessage(error.message)
+      console.error(error)
+    }
   }
 
   const onChange = (e) => {
-    setFile(e.target.files[0])
-
     setFormData({ ...formData, [e.target.name]: e.target.value })
+
+    if (e.target.name === 'image') {
+      setAgentImage(e.target.files[0])
+    }
   }
 
   const maxLengthCheck = (object) => {
@@ -142,6 +182,7 @@ const CreateNewAgent = () => {
           onSubmit={handleSubmit}
           className='flex flex-col space-y-8 text-lg'
           ref={formRef}
+          encType='multipart/form-data'
         >
           <div className='input-row flex space-x-5'>
             <div className='input-group flex flex-col space-y-2'>

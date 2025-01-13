@@ -6,11 +6,14 @@ const {
   getAllAgents,
   updateAgent,
   deleteAgent,
+  getAllImages,
 } = require('../controllers/authController')
 const verifyAgent = require('../middlewares/verifyAgent')
 const router = express.Router()
 
 router.post('/create-agent', verifyAgent, createAgent)
+
+router.post('/get-agent-images', verifyAgent, getAllImages)
 
 router.post('/agent-login', agentLogin)
 

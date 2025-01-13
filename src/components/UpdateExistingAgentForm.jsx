@@ -52,6 +52,8 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    console.log('severityCount:', severityCount)
+
     const response = await fetch(
       'http://localhost:5000/api/auth/update-agent',
       {

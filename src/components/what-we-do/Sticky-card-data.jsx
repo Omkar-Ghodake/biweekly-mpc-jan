@@ -76,6 +76,7 @@ export default function StickyCardData() {
           return (
             <>
               <div
+                key={element.title}
                 className='card'
                 data-bs-toggle='modal'
                 data-bs-target='#stickyCardModal'
@@ -86,13 +87,13 @@ export default function StickyCardData() {
                 ref={cardModalRef}
               >
                 <span className='card-img-top'>
-                  <img src={element.image} class='' alt='...' />
+                  <img src={element.image} className='' alt='...' />
                 </span>
-                <div class='card-body'>
+                <div className='card-body'>
                   <p className='card-title'>{element.title}</p>
 
                   {/* badge for pinning the photos */}
-                  <span class='position-absolute top-0 start-50 p-3 translate-middle'>
+                  <span className='position-absolute top-0 start-50 p-3 translate-middle'>
                     <img src={pinLogo} />
                   </span>
                 </div>

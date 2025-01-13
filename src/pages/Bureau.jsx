@@ -1,41 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import logo from '../assets/mpcBadge.png'
+import { AllAgentsContext } from '../context/AllAgentsProvider'
 
 const Bureau = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [carouselData, setCarouselData] = useState([])
   const [rotateClass, setRotateClass] = useState('')
 
+  const { allAgents, agentsImages } = useContext(AllAgentsContext)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/auth//agents', {
-          method: 'POST',
-          body: JSON.stringify({
-            authToken: localStorage.getItem('auth-token'),
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+        // const response = await fetch('http://localhost:5000/api/auth/agents', {
+        //   method: 'POST',
+        //   body: JSON.stringify({
+        //     authToken: localStorage.getItem('auth-token'),
+        //   }),
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // })
 
-        const jsonData = await response.json()
+        // const jsonData = await response.json()
 
-        const findChief = jsonData.agents.find(
-          (agent) => agent.role === 'chief'
-        )
-        const otherAgents = jsonData.agents.filter(
-          (agent) => agent.role !== 'chief'
-        )
+        const findChief = allAgents.find((agent) => agent.role === 'chief')
+        const otherAgents = allAgents.filter((agent) => agent.role !== 'chief')
 
         const sortedOtherAgents = otherAgents.sort(
           (a, b) => b.total_score - a.total_score
         )
 
         const sortedAgents = [findChief, ...sortedOtherAgents]
-
-        console.log(findChief)
-        console.log('Sorted array: ', sortedAgents)
 
         setCarouselData(sortedAgents)
       } catch (error) {
@@ -139,7 +135,7 @@ const Bureau = () => {
                 {/* Image Section */}
                 <div className='flex flex-col items-center justify-center w-[250px] h-[375px]'>
                   <img
-                    src={`/profileImages/${item.domain_name}.png`}
+                    src={agentsImages[`${item.domain_name}.png`]}
                     alt={item.name}
                     className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale'
                   />
@@ -238,7 +234,7 @@ const Bureau = () => {
             onClick={() => handleThumbnailClick(index)}
           >
             <img
-              src={`/profileImages/${item.domain_name}.png`}
+              src={agentsImages[`${item.domain_name}.png`]}
               alt={item.name}
               className='w-full h-full object-cover rounded-full'
             />

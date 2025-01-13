@@ -2,9 +2,58 @@ const Agent = require('../models/Agent')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const { capitalizeFirstLetter } = require('../utils')
-const mongoose = require('mongoose')
+const multer = require('multer')
+const path = require('path')
+const upload = require('./upload')
+const fs = require('fs')
 
 const JWT_SECRET = process.env.JWT_SECRET
+
+// Handle file upload logic
+exports.uploadFile = (req, res) => {
+  try {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'No file uploaded.' })
+    }
+
+    // Send back the uploaded file metadata
+    res.json({
+      success: true,
+      message: 'File uploaded successfully',
+      file: req.file, // Send the file's metadata (including filename)
+    })
+  } catch (error) {
+    res.json({ success: false, message: 'Server error occurred.' })
+    console.error(error)
+  }
+}
+
+exports.getAllImages = async (req, res) => {
+  try {
+    const imageDirectory = path.join('uploads')
+
+    console.log('imageDirectory:', imageDirectory)
+
+    fs.readdir(imageDirectory, (err, files) => {
+      if (err) {
+        return res.json({ success: false, message: 'Error reading directory.' })
+      }
+
+      const imageObject = files.reduce((acc, file) => {
+        acc[file] = `http://localhost:5000/images/${file}`
+
+        return acc
+      }, {})
+
+      res.json({ success: true, images: imageObject })
+    })
+  } catch (error) {
+    res.json({ success: false, message: 'Server error occurred.' })
+    console.error(error)
+  }
+}
 
 exports.createAgent = async (req, res) => {
   try {
@@ -18,14 +67,21 @@ exports.createAgent = async (req, res) => {
       resigned,
     } = req.body
 
+    // res.setHeader('Access-Control-Allow-Origin', '*')
+    // res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT')
+    // res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
     const agent = req.agent
 
-    let totalScore =
-      parseInt(severity_count.blocker) * 10 +
-      parseInt(severity_count.critical) * 8 +
-      parseInt(severity_count.major) * 5 +
-      parseInt(severity_count.normal) * 3 +
-      parseInt(severity_count.minor) * 1
+    let totalScore = 0
+    if (severity_count) {
+      totalScore =
+        parseInt(severity_count.blocker) * 10 +
+        parseInt(severity_count.critical) * 8 +
+        parseInt(severity_count.major) * 5 +
+        parseInt(severity_count.normal) * 3 +
+        parseInt(severity_count.minor) * 1
+    }
 
     // console.log(parseInt(severity_count.blocker))
     // console.log(parseInt(severity_count.critical))
@@ -56,6 +112,15 @@ exports.createAgent = async (req, res) => {
     if (agent.role !== 'chief' && agent.role !== 'captain') {
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
+
+    // Ensure that Multer correctly handles the file upload
+    upload.single('image')(req, res, (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ success: false, message: 'Error during file upload' })
+      }
+    })
 
     const newAgent = await Agent.create({
       domain_name,
@@ -163,12 +228,33 @@ exports.updateAgent = async (req, res) => {
 
     const agent = req.agent
 
-    req.body.total_score =
-      parseInt(severity_count.blocker) * 10 +
-      parseInt(severity_count.critical) * 8 +
-      parseInt(severity_count.major) * 5 +
-      parseInt(severity_count.normal) * 3 +
-      parseInt(severity_count.minor) * 1
+    // console.log(parseInt(severity_count.blocker))
+    // console.log(parseInt(severity_count.critical))
+    // console.log(parseInt(severity_count.major))
+    // console.log(parseInt(severity_count.normal))
+    // console.log(parseInt(severity_count.minor))
+
+    console.log('severity_count:', severity_count)
+
+    if (severity_count) {
+      if (severity_count?.blocker.length > 0) {
+        total_score = parseInt(severity_count?.blocker) * 10
+      }
+      if (severity_count?.critical.length > 0) {
+        total_score += parseInt(severity_count?.critical) * 8
+      }
+      if (severity_count?.major.length > 0) {
+        total_score += parseInt(severity_count?.major) * 5
+      }
+      if (severity_count?.normal.length > 0) {
+        total_score += parseInt(severity_count?.normal) * 3
+      }
+      if (severity_count?.minor.length > 0) {
+        total_score += parseInt(severity_count?.minor) * 1
+      }
+    }
+
+    console.log('total_score:', total_score)
 
     if (agent.role !== 'chief' && agent.role !== 'captain') {
       return res.json({ success: false, message: 'Unauthorized activity.' })
@@ -179,18 +265,18 @@ exports.updateAgent = async (req, res) => {
     if (!existingAgent)
       return res.json({ success: false, message: 'No agent found.' })
 
-    const updatedAgent = await Agent.findOneAndUpdate(
-      existingAgent._id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
+    // const updatedAgent = await Agent.findOneAndUpdate(
+    //   existingAgent._id,
+    //   {
+    //     $set: req.body,
+    //   },
+    //   { new: true }
+    // )
 
     return res.json({
       success: true,
       message: 'Agent updated successfully.',
-      updatedAgent,
+      // updatedAgent,
     })
   } catch (error) {
     res.json({ success: false, message: 'Server error occurred.' })

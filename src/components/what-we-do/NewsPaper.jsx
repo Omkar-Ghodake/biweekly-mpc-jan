@@ -20,7 +20,7 @@ export default function NewsPaper() {
       >
         <img src={image1} alt='' />
         {/* badge for{expand==  pinning ? 'expand':'image1'}the photos */}
-        <span class='pin position-absolute top-2 start-50 p-3 translate-middle'>
+        <span className='pin position-absolute top-2 start-50 p-3 translate-middle'>
           {!expand && <img src={pinLogo} />}
         </span>
       </span>
@@ -33,7 +33,7 @@ export default function NewsPaper() {
       >
         <img src={image2} alt='' />
         {/* badge for pinning the photos */}
-        <span class='pin position-absolute top-2 start-50 p-3 translate-middle'>
+        <span className='pin position-absolute top-2 start-50 p-3 translate-middle'>
           {!expand && <img src={pinLogo} />}
         </span>
       </span>
@@ -46,7 +46,7 @@ export default function NewsPaper() {
       >
         <img src={image3} alt='' />
         {/* badge for pinning the photos */}
-        <span class='pin position-absolute top-2 start-50 p-3 translate-middle'>
+        <span className='pin position-absolute top-2 start-50 p-3 translate-middle'>
           {!expand && <img src={pinLogo} />}
         </span>
       </span>
@@ -59,7 +59,7 @@ export default function NewsPaper() {
       >
         <img src={image4} alt='' />
         {/* badge for pinning the photos */}
-        <span class='pin position-absolute top-2 start-50 p-3 translate-middle'>
+        <span className='pin position-absolute top-2 start-50 p-3 translate-middle'>
           {!expand && <img src={pinLogo} />}
         </span>
       </span>
