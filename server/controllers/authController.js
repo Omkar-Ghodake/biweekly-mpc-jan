@@ -7,6 +7,8 @@ const path = require('path')
 const upload = require('./upload')
 const fs = require('fs')
 
+const imageDirectoryPath = path.join(__dirname, '../uploads')
+
 const JWT_SECRET = process.env.JWT_SECRET
 
 // Handle file upload logic
@@ -33,8 +35,6 @@ exports.uploadFile = (req, res) => {
 exports.getAllImages = async (req, res) => {
   try {
     const imageDirectory = path.join('uploads')
-
-    console.log('imageDirectory:', imageDirectory)
 
     fs.readdir(imageDirectory, (err, files) => {
       if (err) {
@@ -234,27 +234,26 @@ exports.updateAgent = async (req, res) => {
     // console.log(parseInt(severity_count.normal))
     // console.log(parseInt(severity_count.minor))
 
-    console.log('severity_count:', severity_count)
+    // console.log('severity_count:', severity_count)
 
-    if (severity_count) {
-      if (severity_count?.blocker.length > 0) {
-        total_score = parseInt(severity_count?.blocker) * 10
-      }
-      if (severity_count?.critical.length > 0) {
-        total_score += parseInt(severity_count?.critical) * 8
-      }
-      if (severity_count?.major.length > 0) {
-        total_score += parseInt(severity_count?.major) * 5
-      }
-      if (severity_count?.normal.length > 0) {
-        total_score += parseInt(severity_count?.normal) * 3
-      }
-      if (severity_count?.minor.length > 0) {
-        total_score += parseInt(severity_count?.minor) * 1
-      }
+    let totalScore = 0
+    if (parseInt(severity_count.blocker) * 10) {
+      totalScore += parseInt(severity_count.blocker) * 10
+    }
+    if (parseInt(severity_count.critical) * 8) {
+      totalScore += parseInt(severity_count.critical) * 8
+    }
+    if (parseInt(severity_count.major) * 5) {
+      totalScore += parseInt(severity_count.major) * 5
+    }
+    if (parseInt(severity_count.normal) * 3) {
+      totalScore += parseInt(severity_count.normal) * 3
+    }
+    if (parseInt(severity_count.minor)) {
+      totalScore += parseInt(severity_count.minor)
     }
 
-    console.log('total_score:', total_score)
+    req.body.total_score = totalScore
 
     if (agent.role !== 'chief' && agent.role !== 'captain') {
       return res.json({ success: false, message: 'Unauthorized activity.' })
@@ -265,18 +264,33 @@ exports.updateAgent = async (req, res) => {
     if (!existingAgent)
       return res.json({ success: false, message: 'No agent found.' })
 
-    // const updatedAgent = await Agent.findOneAndUpdate(
-    //   existingAgent._id,
-    //   {
-    //     $set: req.body,
-    //   },
-    //   { new: true }
-    // )
+    const oldFileName = `${existingAgent.domain_name}.png`
+    const newFileName = `${domain_name}.png`
+
+    const oldFilePath = path.join(imageDirectoryPath, oldFileName)
+    const newFilePath = path.join(imageDirectoryPath, newFileName)
+
+    console.log('oldFilePath:', oldFilePath)
+    console.log('__dirname:', __dirname)
+
+    fs.rename(oldFilePath, newFilePath, (err) => {
+      if (err) {
+        console.error('Error renaming the file:', err)
+      }
+    })
+
+    const updatedAgent = await Agent.findOneAndUpdate(
+      existingAgent._id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    )
 
     return res.json({
       success: true,
       message: 'Agent updated successfully.',
-      // updatedAgent,
+      updatedAgent,
     })
   } catch (error) {
     res.json({ success: false, message: 'Server error occurred.' })

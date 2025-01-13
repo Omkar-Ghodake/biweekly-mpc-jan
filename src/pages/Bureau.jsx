@@ -137,7 +137,7 @@ const Bureau = () => {
                   <img
                     src={agentsImages[`${item.domain_name}.png`]}
                     alt={item.name}
-                    className='w-[200px] h-[200px] object-cover rounded-lg mb-3 grayscale'
+                    className='w-[200px] h-[200px] object-contain object-center  rounded-lg mb-3 grayscale'
                   />
                   <p className='font-bold text-center text-white border-gray-700  border-2 p-2 rounded-md w-[200px] tracking-widest font-mono'>
                     ID: {item.emp_id}
