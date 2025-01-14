@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
-import axios from 'axios'
+import { motion } from 'framer-motion'
 
 const CreateNewAgent = () => {
   const [formData, setFormData] = useState({
@@ -160,7 +160,11 @@ const CreateNewAgent = () => {
   }
 
   return (
-    <div className='create-new-agent relative h-full flex flex-col justify-center items-center'>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className='create-new-agent relative h-full flex flex-col justify-center items-center'
+    >
       <Link
         to={'/dashboard'}
         className='absolute left-[20vw] top-0 text-3xl hover:text-inherit hover:bg-slate-500/40 p-1 rounded-full duration-150'
@@ -341,7 +345,7 @@ const CreateNewAgent = () => {
           </Button>
         </form>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
