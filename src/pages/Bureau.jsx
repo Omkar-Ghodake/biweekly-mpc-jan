@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react'
 import logo from '../assets/mpcBadge.png'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
+import resigned from '../assets/resigned.png'
+import resigned2 from '../assets/resigned2.png'
 
 const Bureau = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [carouselData, setCarouselData] = useState([])
   const [rotateClass, setRotateClass] = useState('')
 
-  const { allAgents, agentsImages } = useContext(AllAgentsContext)
+  const { allAgents, agentsImages, getAllAgents } = useContext(AllAgentsContext)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        await getAllAgents()
         // const response = await fetch('http://localhost:5000/api/auth/agents', {
         //   method: 'POST',
         //   body: JSON.stringify({
@@ -24,16 +27,20 @@ const Bureau = () => {
 
         // const jsonData = await response.json()
 
-        const findChief = allAgents.find((agent) => agent.role === 'chief')
-        const otherAgents = allAgents.filter((agent) => agent.role !== 'chief')
+        if (allAgents) {
+          const findChief = allAgents?.find((agent) => agent.role === 'chief')
+          const otherAgents = allAgents?.filter(
+            (agent) => agent.role !== 'chief'
+          )
 
-        const sortedOtherAgents = otherAgents.sort(
-          (a, b) => b.total_score - a.total_score
-        )
+          const sortedOtherAgents = otherAgents?.sort(
+            (a, b) => b.total_score - a.total_score
+          )
 
-        const sortedAgents = [findChief, ...sortedOtherAgents]
+          const sortedAgents = [findChief, ...sortedOtherAgents]
 
-        setCarouselData(sortedAgents)
+          setCarouselData(sortedAgents)
+        }
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -125,7 +132,7 @@ const Bureau = () => {
           className={`flex transition-transform duration-500 ease-in-out transform ${rotateClass}`}
           style={{ transform: `translateX(${translateValue}%)` }}
         >
-          {carouselData.map((item, index) => (
+          {carouselData?.map((item, index) => (
             <div
               key={index}
               className='flex-shrink-0 w-full h-full flex items-center justify-center transition-all duration-500'
@@ -134,11 +141,21 @@ const Bureau = () => {
               <div className='flex w-full md:w-3/4 lg:w-[850px] h-[350px] bg-black shadow-xl rounded-lg overflow-hidden  border border-gray-700 '>
                 {/* Image Section */}
                 <div className='flex flex-col items-center justify-center w-[250px] h-[375px]'>
-                  <img
-                    src={agentsImages[`${item.domain_name}.png`]}
-                    alt={item.name}
-                    className='w-[200px] h-[200px] object-contain object-center  rounded-lg mb-3 grayscale'
-                  />
+                  <div className='relative'>
+                    <img
+                      src={agentsImages[`${item.domain_name}.png`]}
+                      alt={item.name}
+                      className='w-[200px] h-[200px] object-contain object-center  rounded-lg mb-3 grayscale'
+                    />
+
+                    {item.resigned && (
+                      <img
+                        src={resigned}
+                        alt=''
+                        className='absolute bottom-0 right-0 opacity-90 rotate-[20deg]'
+                      />
+                    )}
+                  </div>
                   <p className='font-bold text-center text-white border-gray-700  border-2 p-2 rounded-md w-[200px] tracking-widest font-mono'>
                     ID: {item.emp_id}
                   </p>
@@ -223,7 +240,7 @@ const Bureau = () => {
 
       {/* Thumbnail Navigation */}
       <div className='absolute bottom-10 flex justify-center w-full space-x-3 grayscale contrast-100 brightness-110'>
-        {carouselData.map((item, index) => (
+        {carouselData?.map((item, index) => (
           <div
             key={index}
             className={`w-10 h-10 rounded-full border-4 cursor-pointer transition-all duration-300 ${

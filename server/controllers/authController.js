@@ -270,9 +270,6 @@ exports.updateAgent = async (req, res) => {
     const oldFilePath = path.join(imageDirectoryPath, oldFileName)
     const newFilePath = path.join(imageDirectoryPath, newFileName)
 
-    console.log('oldFilePath:', oldFilePath)
-    console.log('__dirname:', __dirname)
-
     fs.rename(oldFilePath, newFilePath, (err) => {
       if (err) {
         console.error('Error renaming the file:', err)
@@ -309,6 +306,16 @@ exports.deleteAgent = async (req, res) => {
     }
 
     const existingAgent = await Agent.findOne({ emp_id })
+
+    const fileName = `${existingAgent.domain_name}.png`
+    const filePath = path.join(imageDirectoryPath, fileName)
+
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error('Error deleting the file:', err)
+        throw new Error(err)
+      }
+    })
 
     if (!existingAgent)
       return res.json({ success: false, message: 'No agent found.' })
