@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import logo from '../assets/mpcBadge.png'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
 import resigned from '../assets/resigned.png'
-import resigned2 from '../assets/resigned2.png'
+// import resigned2 from '../assets/resigned2.png'
+import detectiveProfile from '../assets/detective_profile.png'
 
 const Bureau = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -143,9 +144,17 @@ const Bureau = () => {
                 <div className='flex flex-col items-center justify-center w-[250px] h-[375px]'>
                   <div className='relative'>
                     <img
-                      src={agentsImages[`${item.domain_name}.png`]}
+                      src={
+                        `${item.domain_name}.png`.toString() in agentsImages
+                          ? agentsImages[`${item.domain_name}.png`]
+                          : detectiveProfile
+                      }
                       alt={item.name}
-                      className='w-[200px] h-[200px] object-contain object-center  rounded-lg mb-3 grayscale'
+                      className={`w-[200px] h-[200px] object-contain object-center  rounded-lg mb-3 ${
+                        `${item.domain_name}.png`.toString() in agentsImages
+                          ? 'grayscale'
+                          : 'brightness-0 invert'
+                      }`}
                     />
 
                     {item.resigned && (
@@ -251,9 +260,17 @@ const Bureau = () => {
             onClick={() => handleThumbnailClick(index)}
           >
             <img
-              src={agentsImages[`${item.domain_name}.png`]}
+              src={
+                `${item.domain_name}.png`.toString() in agentsImages
+                  ? agentsImages[`${item.domain_name}.png`]
+                  : detectiveProfile
+              }
               alt={item.name}
-              className='w-full h-full object-cover rounded-full'
+              className={`w-full h-full object-cover rounded-full ${
+                `${item.domain_name}.png`.toString() in agentsImages
+                  ? 'grayscale'
+                  : 'brightness-0 invert'
+              }`}
             />
           </div>
         ))}

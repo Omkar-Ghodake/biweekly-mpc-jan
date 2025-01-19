@@ -6,6 +6,8 @@ import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
 import { motion } from 'framer-motion'
+import Select from '../components/Select'
+import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 
 const CreateNewAgent = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ const CreateNewAgent = () => {
       minor: 0,
     },
     courses: '',
+    role: 'agent',
   })
 
   const [severityCount, setSeverityCount] = useState({
@@ -31,10 +34,11 @@ const CreateNewAgent = () => {
     minor: 0,
   })
 
-  const [agentImage, setAgentImage] = useState('')
+  const [agentImage, setAgentImage] = useState(null)
 
   const { showToastMessage } = useContext(ToastNotificationContext)
   const { getAllAgents } = useContext(AllAgentsContext)
+  const { agent } = useContext(AgentAuthenticationContext)
 
   const formRef = useRef(null)
 
@@ -51,6 +55,8 @@ const CreateNewAgent = () => {
   }
 
   const uploadImage = async () => {
+    if (!agentImage) return { success: true }
+
     try {
       const file = agentImage
 
@@ -96,6 +102,7 @@ const CreateNewAgent = () => {
               minor: severityCount.minor,
             },
             courses: formData.courses,
+            role: formData.role,
             authToken: localStorage.getItem('auth-token'),
           }),
           headers: {
@@ -131,6 +138,7 @@ const CreateNewAgent = () => {
             minor: 0,
           },
           courses: '',
+          role: 'agent',
         })
         formRef.current.reset()
       }
@@ -145,6 +153,7 @@ const CreateNewAgent = () => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
+    console.log('formData:', formData)
     if (e.target.name === 'image') {
       setAgentImage(e.target.files[0])
     }
@@ -316,29 +325,79 @@ const CreateNewAgent = () => {
             </div>
           </div>
 
-          <div className='input-group flex items-center space-x-5'>
-            <label htmlFor='courses' className='mr-5'>
-              <span>Image </span>
-            </label>
-
-            <input
-              className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 text-base font-semibold font-mono'
-              type='file'
-              name='image'
-              accept='image/png, image/jpeg'
-              onChange={onChange}
-            />
-          </div>
-
-          {/* <div className='input-row flex space-x-5'>
-            <div className='input-group flex space-x-5'>
-              <label htmlFor='resigned' className='mr-5'>
-                Resigned
+          <div className='input-row flex space-x-5'>
+            <div className='input-group flex items-center space-x-5 w-1/2'>
+              <label htmlFor='courses' className='mr-5'>
+                <span>Image</span>
               </label>
 
-              <Switch state={formData.resigned} handler={toggleIsResigned} />
+              <input
+                className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 text-base font-semibold font-mono'
+                type='file'
+                name='image'
+                accept='image/png, image/jpeg'
+                onChange={onChange}
+              />
             </div>
-          </div> */}
+
+            {/* <Select label={'Role'} state={'Admin'} /> */}
+            <div className='input-group flex flex-col space-y-2'>
+              <span className='mr-10'>Role</span>
+
+              <div className='flex items-center'>
+                <div className='flex items-center space-x-4 mr-5'>
+                  <label
+                    htmlFor='role'
+                    className='text-xl font-semibold w-full font-mono'
+                  >
+                    Agent
+                  </label>
+                  <input
+                    type='radio'
+                    name='role'
+                    value='agent'
+                    className='cursor-pointer'
+                    onChange={onChange}
+                  />
+                </div>
+
+                {agent.role === 'chief' && (
+                  <>
+                    <div className='flex items-center space-x-4 mr-5'>
+                      <label
+                        htmlFor='role'
+                        className='text-xl font-semibold w-full font-mono'
+                      >
+                        Captain
+                      </label>
+                      <input
+                        type='radio'
+                        name='role'
+                        value='captain'
+                        className='cursor-pointer '
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div className='flex items-center space-x-4 mr-5'>
+                      <label
+                        htmlFor='role'
+                        className='text-xl font-semibold w-full font-mono'
+                      >
+                        Chief
+                      </label>
+                      <input
+                        type='radio'
+                        name='role'
+                        value='chief'
+                        className='cursor-pointer '
+                        onChange={onChange}
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
 
           <Button className={'text-base px-5 py-2 font-bold w-full'}>
             CREATE AGENT

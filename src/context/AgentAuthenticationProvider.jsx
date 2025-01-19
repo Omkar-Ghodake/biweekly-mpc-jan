@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { Router } from 'react-router-dom'
+import React, { createContext, useEffect, useState } from 'react'
 
 const AgentAuthenticationContext = createContext()
 

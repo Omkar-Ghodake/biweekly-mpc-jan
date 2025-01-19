@@ -61,8 +61,8 @@ export default function StickyCardData() {
       title: 'MPC',
       description:
         'In MPC, we completed the citizen view verification task, Twitter stats of MP task, regional language checklist, and sanity testing, thoroughly reviewing and raising any issues encountered.',
-      totalScore: 2,
-      issueCount: 15,
+      totalScore: 76,
+      issueCount: 16,
       image: modiJiImage,
     },
   ]
@@ -121,12 +121,12 @@ export default function StickyCardData() {
 
             <div className='score'>
               <span>
-                <h1>Total Score</h1>
-                <h1>{temp[index].totalScore}</h1>
-              </span>
-              <span>
                 <h1>Issues Found</h1>
                 <h1>{temp[index].issueCount}</h1>
+              </span>
+              <span>
+                <h1>Total Score</h1>
+                <h1>{temp[index].totalScore}</h1>
               </span>
             </div>
           </div>

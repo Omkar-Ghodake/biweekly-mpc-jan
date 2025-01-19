@@ -14,6 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 // Handle file upload logic
 exports.uploadFile = (req, res) => {
   try {
+    console.log(req.file)
     if (!req.file) {
       return res
         .status(400)
@@ -46,6 +47,8 @@ exports.getAllImages = async (req, res) => {
 
         return acc
       }, {})
+
+      console.log('imageObject', imageObject)
 
       res.json({ success: true, images: imageObject })
     })
@@ -110,6 +113,10 @@ exports.createAgent = async (req, res) => {
         .json({ success: false, message: 'Agent name already exists.' })
 
     if (agent.role !== 'chief' && agent.role !== 'captain') {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
+
+    if (agent.role !== 'chief' && (role === 'captain' || role === 'chief')) {
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
 
@@ -305,15 +312,16 @@ exports.deleteAgent = async (req, res) => {
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
 
+    console.log('emp_id:', emp_id)
     const existingAgent = await Agent.findOne({ emp_id })
-
+    console.log('existingAgent:', existingAgent)
     const fileName = `${existingAgent.domain_name}.png`
     const filePath = path.join(imageDirectoryPath, fileName)
 
     fs.unlink(filePath, (err) => {
       if (err) {
         console.error('Error deleting the file:', err)
-        throw new Error(err)
+        // throw new Error(err)
       }
     })
 
