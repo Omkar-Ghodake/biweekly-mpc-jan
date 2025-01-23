@@ -1,13 +1,11 @@
 import React, { useRef, useState } from 'react'
-import jioTvLogo from '../../assets/WhatWeDo-Assets/jioTvLogo.png'
-import jioCloudLogo from '../../assets/WhatWeDo-Assets/jioCloudLogo.png'
+import { IoClose } from 'react-icons/io5'
 import alexaLogo from '../../assets/WhatWeDo-Assets/alexaLogo.png'
+import jioCloudLogo from '../../assets/WhatWeDo-Assets/jioCloudLogo.png'
+import jioTvLogo from '../../assets/WhatWeDo-Assets/jioTvLogo.png'
 import modiJiImage from '../../assets/WhatWeDo-Assets/modiJiImage.png'
 import pinLogo from '../../assets/WhatWeDo-Assets/pinLogo.png'
 import '../../styles/WhatWeDo/StickyNotes.css'
-import useClickOutsideElement from '../../hooks/useClickOutside'
-import { IoClose } from 'react-icons/io5'
-import { LuSquareBottomDashedScissors } from 'react-icons/lu'
 
 export default function StickyCardData() {
   const [index, setIndex] = useState()
@@ -44,7 +42,7 @@ export default function StickyCardData() {
     {
       title: 'Jio Cloud',
       description:
-        'We completed a round of testing for JioTV, which involved verifying app functionality, checking channel streaming quality, testing user interface responsiveness, ensuring device compatibility, and identifying bugs for a seamless user experience.',
+        'We conducted a detailed sanity check of the JioCloud app, performed regression testing on the production environment, executed test scenarios, and raised all identified issues for review and resolution.',
       totalScore: '37',
       issueCount: '11',
       image: jioCloudLogo,

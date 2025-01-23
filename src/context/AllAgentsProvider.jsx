@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { LoadingContext } from './LoadingProvider'
 
 const AllAgentsContext = createContext()
 
@@ -6,7 +7,11 @@ const AllAgentsProvider = ({ children }) => {
   const [allAgents, setAllAgents] = useState([])
   const [agentsImages, setAgentsImages] = useState()
 
+  const { loadingState, setLoadingState } = useContext(LoadingContext)
+
   const getAllAgents = async () => {
+    setLoadingState({ isLoading: true, message: 'Loading Agents...' })
+
     try {
       const response = await fetch('http://localhost:5000/api/auth/agents', {
         method: 'POST',
@@ -19,14 +24,30 @@ const AllAgentsProvider = ({ children }) => {
       const json = await response.json()
 
       const imagesResponse = await getAllAgentsImages()
+      console.log('json:', json)
       // if (!imagesResponse.success) {
       //   throw new Error('Could not get agents images.')
       // }
 
-      setAllAgents(json.agents)
+      const findChief = json.agents?.find((agent) => agent.role === 'chief')
+      console.log('findChief:', findChief)
+
+      const otherAgents = json.agents?.filter((agent) => agent.role !== 'chief')
+      console.log('otherAgents:', otherAgents)
+
+      const sortedOtherAgents = otherAgents?.sort(
+        (a, b) => b.total_score - a.total_score
+      )
+      console.log('sortedOtherAgents:', sortedOtherAgents)
+
+      const sortedAgents = [findChief, ...sortedOtherAgents]
+
+      setAllAgents(sortedAgents)
     } catch (error) {
       console.error(error)
     }
+
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const getAllAgentsImages = async () => {

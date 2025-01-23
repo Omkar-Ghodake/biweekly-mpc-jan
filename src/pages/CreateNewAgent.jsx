@@ -8,6 +8,7 @@ import { AllAgentsContext } from '../context/AllAgentsProvider'
 import { motion } from 'framer-motion'
 import Select from '../components/Select'
 import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
+import { LoadingContext } from '../context/LoadingProvider'
 
 const CreateNewAgent = () => {
   const [formData, setFormData] = useState({
@@ -39,6 +40,7 @@ const CreateNewAgent = () => {
   const { showToastMessage } = useContext(ToastNotificationContext)
   const { getAllAgents } = useContext(AllAgentsContext)
   const { agent } = useContext(AgentAuthenticationContext)
+  const { setLoadingState } = useContext(LoadingContext)
 
   const formRef = useRef(null)
 
@@ -82,7 +84,7 @@ const CreateNewAgent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    setLoadingState({ isLoading: true, message: 'Creating new Agent.' })
     try {
       const response = await fetch(
         'http://localhost:5000/api/auth/create-agent',
@@ -148,12 +150,13 @@ const CreateNewAgent = () => {
       showToastMessage(error.message)
       console.error(error)
     }
+
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
-    console.log('formData:', formData)
     if (e.target.name === 'image') {
       setAgentImage(e.target.files[0])
     }
@@ -352,13 +355,24 @@ const CreateNewAgent = () => {
                   >
                     Agent
                   </label>
-                  <input
-                    type='radio'
-                    name='role'
-                    value='agent'
-                    className='cursor-pointer'
-                    onChange={onChange}
-                  />
+                  {agent.role === 'captain' ? (
+                    <input
+                      type='radio'
+                      name='role'
+                      value='agent'
+                      className='cursor-pointer'
+                      onChange={onChange}
+                      checked
+                    />
+                  ) : (
+                    <input
+                      type='radio'
+                      name='role'
+                      value='agent'
+                      className='cursor-pointer'
+                      onChange={onChange}
+                    />
+                  )}
                 </div>
 
                 {agent.role === 'chief' && (

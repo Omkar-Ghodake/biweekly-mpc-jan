@@ -52,7 +52,8 @@ input[type='radio']:after {
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
-  background-color: #939393;
+  /* background-color: #939393; */
+  background-color: #000;
   content: '';
   display: inline-block;
   visibility: visible;
@@ -67,7 +68,10 @@ input[type='radio']:checked:after {
   left: 50%;
   transform: translate(-50%, -50%);
   position: relative;
-  background-color: black;
+  /* background-color: black; */
+  background-color: #939393;
+  background-color: #fecaca;
+
   content: '';
   display: inline-block;
   visibility: visible;

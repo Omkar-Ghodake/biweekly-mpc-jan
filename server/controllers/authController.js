@@ -14,7 +14,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 // Handle file upload logic
 exports.uploadFile = (req, res) => {
   try {
-    console.log(req.file)
     if (!req.file) {
       return res
         .status(400)
@@ -47,8 +46,6 @@ exports.getAllImages = async (req, res) => {
 
         return acc
       }, {})
-
-      console.log('imageObject', imageObject)
 
       res.json({ success: true, images: imageObject })
     })
@@ -85,12 +82,6 @@ exports.createAgent = async (req, res) => {
         parseInt(severity_count.normal) * 3 +
         parseInt(severity_count.minor) * 1
     }
-
-    // console.log(parseInt(severity_count.blocker))
-    // console.log(parseInt(severity_count.critical))
-    // console.log(parseInt(severity_count.major))
-    // console.log(parseInt(severity_count.normal))
-    // console.log(parseInt(severity_count.minor))
 
     if (!domain_name || !emp_id)
       return res
@@ -210,6 +201,8 @@ exports.getAllAgents = async (req, res) => {
   try {
     const agents = await Agent.find({}).sort({ domain_name: 1 })
 
+    console.log('agents:', agents)
+
     if (!agents)
       return res.json({ success: false, message: 'No agents found.' })
 
@@ -235,14 +228,6 @@ exports.updateAgent = async (req, res) => {
 
     const agent = req.agent
 
-    // console.log(parseInt(severity_count.blocker))
-    // console.log(parseInt(severity_count.critical))
-    // console.log(parseInt(severity_count.major))
-    // console.log(parseInt(severity_count.normal))
-    // console.log(parseInt(severity_count.minor))
-
-    // console.log('severity_count:', severity_count)
-
     let totalScore = 0
     if (parseInt(severity_count.blocker) * 10) {
       totalScore += parseInt(severity_count.blocker) * 10
@@ -266,10 +251,21 @@ exports.updateAgent = async (req, res) => {
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
 
+    if (agent.role !== 'chief' && (role === 'captain' || role === 'chief')) {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
+
     const existingAgent = await Agent.findOne({ emp_id })
 
     if (!existingAgent)
       return res.json({ success: false, message: 'No agent found.' })
+
+    if (
+      agent.role !== 'chief' &&
+      (existingAgent.role === 'captain' || existingAgent.role === 'chief')
+    ) {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
 
     const oldFileName = `${existingAgent.domain_name}.png`
     const newFileName = `${domain_name}.png`
@@ -290,6 +286,8 @@ exports.updateAgent = async (req, res) => {
       },
       { new: true }
     )
+
+    console.log('updatedAgent:', updatedAgent)
 
     return res.json({
       success: true,
@@ -312,9 +310,15 @@ exports.deleteAgent = async (req, res) => {
       return res.json({ success: false, message: 'Unauthorized activity.' })
     }
 
-    console.log('emp_id:', emp_id)
     const existingAgent = await Agent.findOne({ emp_id })
-    console.log('existingAgent:', existingAgent)
+
+    if (
+      agent.role !== 'chief' &&
+      (existingAgent.srole === 'captain' || existingAgent.role === 'chief')
+    ) {
+      return res.json({ success: false, message: 'Unauthorized activity.' })
+    }
+
     const fileName = `${existingAgent.domain_name}.png`
     const filePath = path.join(imageDirectoryPath, fileName)
 

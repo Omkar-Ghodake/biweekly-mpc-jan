@@ -5,6 +5,8 @@ import Button from '../components/Button'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
 import Switch from '../layouts/Switch'
 import { AllAgentsContext } from '../context/AllAgentsProvider'
+import { LoadingContext } from '../context/LoadingProvider'
+import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 
 const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   const [formData, setFormData] = useState({
@@ -29,11 +31,13 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     normal: 0,
     minor: 0,
   })
-
   const [isConfirmDeleteModalOn, setIsConfirmDeleteModalOn] = useState(false)
+  const [agentImage, setAgentImage] = useState(null)
 
   const { showToastMessage } = useContext(ToastNotificationContext)
   const { getAllAgents } = useContext(AllAgentsContext)
+  const { setLoadingState } = useContext(LoadingContext)
+  const { agent } = useContext(AgentAuthenticationContext)
 
   const formRef = useRef(null)
 
@@ -49,10 +53,36 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     })
   }
 
+  const uploadImage = async () => {
+    if (!agentImage) return { success: true }
+
+    try {
+      const file = agentImage
+
+      const renamedFile = new File([file], `${formData.domain_name}.png`, {
+        type: file.type,
+      })
+
+      const form = new FormData()
+      form.append('image', renamedFile)
+
+      const response = await fetch('http://localhost:5000/api/upload', {
+        method: 'POST',
+        body: form,
+      })
+
+      const json = await response.json()
+
+      return json
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log('severityCount:', severityCount)
+    setLoadingState({ isLoading: true, message: 'Updating Agent.' })
 
     const response = await fetch(
       'http://localhost:5000/api/auth/update-agent',
@@ -65,11 +95,11 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
           total_score: formData?.total_score,
           resigned: formData?.resigned,
           severity_count: {
-            blocker: severityCount.blocker,
-            critical: severityCount.critical,
-            major: severityCount.major,
-            normal: severityCount.normal,
-            minor: severityCount.minor,
+            blocker: severityCount?.blocker,
+            critical: severityCount?.critical,
+            major: severityCount?.major,
+            normal: severityCount?.normal,
+            minor: severityCount?.minor,
           },
           courses: formData?.courses,
           authToken: localStorage.getItem('auth-token'),
@@ -83,9 +113,16 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     const json = await response.json()
 
     if (json.success) {
+      const imageUpload = await uploadImage()
+
+      if (!imageUpload.success) {
+        throw new Error({ message: 'Error uploading image' })
+      }
+
       setSelectedAgent(null)
 
       getAllAgents()
+      setAgentImage('')
 
       formRef.current.reset()
       setFormData({
@@ -106,9 +143,12 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     }
 
     showToastMessage(json.message)
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const handleDeleteAgent = async () => {
+    setLoadingState({ isLoading: true, message: 'Deleting Agent.' })
+
     const response = await fetch(
       'http://localhost:5000/api/auth/delete-agent',
       {
@@ -124,6 +164,8 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     )
 
     const json = await response.json()
+
+    console.log('json:', json)
 
     if (json.success) {
       getAllAgents()
@@ -153,6 +195,8 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
     }
 
     showToastMessage(json.message)
+
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const toggleIsResigned = () => {
@@ -160,8 +204,11 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
   }
 
   const onChange = (e) => {
-    // setDetectiveCode(e.target.value)
     setFormData({ ...formData, [e.target.name]: e.target.value })
+
+    if (e.target.name === 'image') {
+      setAgentImage(e.target.files[0])
+    }
   }
 
   useEffect(() => {
@@ -345,6 +392,20 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                     <Switch
                       state={formData?.resigned}
                       handler={toggleIsResigned}
+                    />
+                  </div>
+
+                  <div className='input-group flex items-center space-x-5 w-1/2'>
+                    <label htmlFor='courses' className='mr-5'>
+                      <span>Image</span>
+                    </label>
+
+                    <input
+                      className='outline-none rounded-md bg-black border-2 border-slate-500/50 focus:border-slate-500 text-base font-semibold font-mono'
+                      type='file'
+                      name='image'
+                      accept='image/png, image/jpeg'
+                      onChange={onChange}
                     />
                   </div>
 

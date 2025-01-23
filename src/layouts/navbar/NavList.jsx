@@ -6,15 +6,18 @@ import mpcBadge from '../../assets/mpcBadge.png'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import useClickOutsideElement from '../../hooks/useClickOutside'
+import { LoadingContext } from '../../context/LoadingProvider'
 
 const NavList = () => {
-  const { agent, setAgent } = useContext(AgentAuthenticationContext)
-
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+
+  const { agent, setAgent } = useContext(AgentAuthenticationContext)
+  const { setLoadingState } = useContext(LoadingContext)
 
   const navigate = useNavigate()
 
   const handleLogOut = () => {
+    setLoadingState({ isLoading: true, message: 'Logging out...' })
     localStorage.removeItem('auth-token')
     setAgent({
       isAuthenticated: false,
@@ -24,6 +27,7 @@ const NavList = () => {
       resigned: null,
     })
     navigate('/sign_in')
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const navMenuRef = useRef()

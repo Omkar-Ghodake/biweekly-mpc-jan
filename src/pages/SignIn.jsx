@@ -4,19 +4,22 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import { AgentAuthenticationContext } from '../context/AgentAuthenticationProvider'
 import { ToastNotificationContext } from '../context/ToastNotificationProvider'
+import { LoadingContext } from '../context/LoadingProvider'
 
 const SignIn = () => {
   const [detectiveCode, setDetectiveCode] = useState()
   const [isInvalidAttempt, setIsInvalidAttempt] = useState(null)
 
   const { showToastMessage } = useContext(ToastNotificationContext)
-  const { agent, getAgent } = useContext(AgentAuthenticationContext)
+  const { agent } = useContext(AgentAuthenticationContext)
+  const { setLoadingState } = useContext(LoadingContext)
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    setLoadingState({ isLoading: true, message: 'Signing In...' })
     try {
       const response = await fetch(
         'http://localhost:5000/api/auth/agent-login',
@@ -40,6 +43,7 @@ const SignIn = () => {
     } catch (error) {
       showToastMessage('Something went wrong.')
     }
+    setLoadingState({ isLoading: false, message: null })
   }
 
   const onChange = (e) => {
