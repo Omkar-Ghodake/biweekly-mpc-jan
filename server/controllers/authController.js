@@ -201,8 +201,6 @@ exports.getAllAgents = async (req, res) => {
   try {
     const agents = await Agent.find({}).sort({ domain_name: 1 })
 
-    console.log('agents:', agents)
-
     if (!agents)
       return res.json({ success: false, message: 'No agents found.' })
 
@@ -286,8 +284,6 @@ exports.updateAgent = async (req, res) => {
       },
       { new: true }
     )
-
-    console.log('updatedAgent:', updatedAgent)
 
     return res.json({
       success: true,

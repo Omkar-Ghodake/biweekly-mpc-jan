@@ -59,8 +59,8 @@ export default function StickyCardData() {
       title: 'MPC',
       description:
         'In MPC, we completed the citizen view verification task, Twitter stats of MP task, regional language checklist, and sanity testing, thoroughly reviewing and raising any issues encountered.',
-      totalScore: 76,
-      issueCount: 16,
+      totalScore: 165,
+      issueCount: 39,
       image: modiJiImage,
     },
   ]

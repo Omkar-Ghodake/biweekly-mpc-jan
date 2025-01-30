@@ -165,8 +165,6 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
 
     const json = await response.json()
 
-    console.log('json:', json)
-
     if (json.success) {
       getAllAgents()
 
@@ -344,6 +342,13 @@ const UpdateExistingAgentForm = ({ selectedAgent, setSelectedAgent }) => {
                           value={formData?.severity_count.minor}
                           onChange={onSeverityChange}
                         />
+                      </div>
+
+                      <div className='flex justify-between items-center w-full space-x-2'>
+                        <p className='min-w-[4rem] text-base'>Total</p>{' '}
+                        <p className='outline-none rounded-md bg-black border-2 border-slate-500/30 focus:border-slate-500 px-4 py-2 text-xl font-semibold w-full font-mono tracking-[10px] text-white/70'>
+                          {selectedAgent.total_score}
+                        </p>
                       </div>
                     </div>
                   </div>

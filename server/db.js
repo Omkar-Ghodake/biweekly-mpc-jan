@@ -14,6 +14,7 @@ const connectToMongo = async () => {
 
     if (connectionStatus) return console.log('Connected to Mongo.')
   } catch (error) {
+    console.error(error)
     return { success: false, message: 'Failed to connect to Mongo.' }
   }
 }

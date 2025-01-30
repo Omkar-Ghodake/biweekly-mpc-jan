@@ -100,9 +100,8 @@ createRoot(document.getElementById('root')).render(
                   </Routes>
                 </div>
               </div>
+              <Loader />
             </BrowserRouter>
-
-            <Loader />
           </ToastNotificationProvider>
         </AgentAuthenticationProvider>
       </AllAgentsProvider>

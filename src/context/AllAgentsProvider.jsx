@@ -24,21 +24,17 @@ const AllAgentsProvider = ({ children }) => {
       const json = await response.json()
 
       const imagesResponse = await getAllAgentsImages()
-      console.log('json:', json)
       // if (!imagesResponse.success) {
       //   throw new Error('Could not get agents images.')
       // }
 
       const findChief = json.agents?.find((agent) => agent.role === 'chief')
-      console.log('findChief:', findChief)
 
       const otherAgents = json.agents?.filter((agent) => agent.role !== 'chief')
-      console.log('otherAgents:', otherAgents)
 
       const sortedOtherAgents = otherAgents?.sort(
         (a, b) => b.total_score - a.total_score
       )
-      console.log('sortedOtherAgents:', sortedOtherAgents)
 
       const sortedAgents = [findChief, ...sortedOtherAgents]
 
